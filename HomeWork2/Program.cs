@@ -10,25 +10,25 @@ namespace HomeWork2
             int arraySize = EnterValueInt();
             int[] massive = new int[arraySize];
             Console.WriteLine("Введите значения массива в порядке возрастания");
-            for(int i = 0; i < massive.Length; i++)
+            for(int i = 0; i < massive.Length; i++) // цикл для ввода значений массива
             {
                 Console.Write($"{i + 1} значение массива: ");
                 massive[i] = EnterValueInt();
             }
             Console.WriteLine("Ваш массив:");
-            for (int i = 0; i < massive.Length; i++)
+            for (int i = 0; i < massive.Length; i++) // Цикл для вывода массива в консоль
             {
                 Console.Write($"{massive[i]} ");
             }
             int amountrUniqueNumbers = 1;
-            for(int j = 1; j < massive.Length; j++)
+            for(int j = 1; j < massive.Length; j++) // Цикл для подсчёта уникальных чисел
             {
                 if (massive[j] != massive[j - 1]) amountrUniqueNumbers++;
             }
             Console.WriteLine($"Количество разных чисел: {amountrUniqueNumbers}");
         }
 
-        static int EnterValueInt()
+        static int EnterValueInt() 
         {
             int value;
             while (true) // Цикл для ввода размера массива и проверки значения
