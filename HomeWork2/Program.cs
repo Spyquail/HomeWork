@@ -16,7 +16,7 @@ namespace HomeWork2
                 massive[i] = EnterValueInt();
             }
             Console.WriteLine("Ваш массив:");
-            for (int i = 0; i < massive.Length; i++)
+            foreach (int i in massive)
             {
                 Console.Write($"{massive[i]} ");
             }
