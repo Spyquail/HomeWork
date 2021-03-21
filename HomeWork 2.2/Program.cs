@@ -1,33 +1,35 @@
 ﻿using System;
 
-namespace HomeWork2
+namespace HomeWork_2._2
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите размер массива: ");
+            Console.Write("Введите размер квадратной матрицы: ");
             int arraySize = EnterValueInt();
-            int[] massive = new int[arraySize];
-            Console.WriteLine("Введите значения массива в порядке возрастания");
-            for(int i = 0; i < massive.Length; i++)
+            int[,] massive = new int[arraySize, arraySize];
+            for (int i = 0; i < massive.Length; i++)
             {
-                Console.Write($"{i + 1} значение массива: ");
-                massive[i] = EnterValueInt();
+                for(int j = 0; j < massive.Length; j++)
+                {
+                    Console.Write($"{i + 1} , {j + 1} значение массива: ");
+                    massive[i , j] = EnterValueInt();
+                }
+
             }
             Console.WriteLine("Ваш массив:");
             for (int i = 0; i < massive.Length; i++)
             {
-                Console.Write($"{massive[i]} ");
-            }
-            int amountrUniqueNumbers = 1;
-            for(int j = 1; j < massive.Length; j++)
-            {
-                if (massive[j] != massive[j - 1]) amountrUniqueNumbers++;
-            }
-            Console.WriteLine($"Количество разных чисел: {amountrUniqueNumbers}");
-        }
+                for (int j = 0; j < massive.Length; j++)
+                {
+                    Console.Write(massive[i , j]);
+                    
+                }
 
+            }
+        }
+        
         static int EnterValueInt()
         {
             int value;
@@ -48,4 +50,6 @@ namespace HomeWork2
             return value;
         }
     }
+
+
 }
