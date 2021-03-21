@@ -9,7 +9,7 @@ namespace HomeWork_2._2
             Console.Write("Введите размер квадратной матрицы: ");
             int arraySize = EnterValueInt();
             int[,] massive = new int[arraySize, arraySize];
-            for (int i = 0; i < massive.GetLength(1); i++)
+            for (int i = 0; i < massive.GetLength(1); i++) // Цикл для ввода значений
             {
                 for(int j = 0; j < massive.GetLength(1); j++)
                 {
@@ -18,7 +18,7 @@ namespace HomeWork_2._2
                 }
             }
             Console.WriteLine("Ваша матрица:");
-            for (int i = 0; i < massive.GetLength(0); i++)
+            for (int i = 0; i < massive.GetLength(0); i++) // Цикл для вывода массива на консоль
             {
                 for (int j = 0; j < massive.GetLength(1); j++)
                 {
@@ -26,7 +26,25 @@ namespace HomeWork_2._2
                 }
                 Console.WriteLine();
             }
-
+            int symmetry = 1; // Переменная для проверки симметричности
+            int matrixRow = 1; // Переменная для оптимизации проверки, чтобы не сравнить диагональ и дважды те же значения
+            for (int i = 0; i < massive.GetLength(0); i++)
+            {
+                for (int j = matrixRow; j < massive.GetLength(1); j++)
+                {
+                    int check = massive[i, j] - massive[j, i]; // Проверка значений относительно дигонали у симмитречной матрицы равны 0
+                    if (check != 0) symmetry = 0;
+                }
+                matrixRow++;
+            }
+            if(symmetry == 1)
+            {
+                Console.WriteLine("Матрциа симметрична");
+            }
+            else
+            {
+                Console.WriteLine("Матрица не симметрична");
+            }
         }
         
         static int EnterValueInt()
