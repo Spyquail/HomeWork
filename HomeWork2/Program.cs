@@ -44,7 +44,6 @@ namespace HomeWork2
                     Console.WriteLine("Такое значение не подходит, попробуйте ещё раз: ");
                 }
             }
-
             return value;
         }
     }

@@ -9,25 +9,27 @@ namespace HomeWork_2._2
             Console.Write("Введите размер квадратной матрицы: ");
             int arraySize = EnterValueInt();
             int[,] massive = new int[arraySize, arraySize];
-            for (int i = 0; i < massive.Length; i++)
+            for (int i = 0; i < massive.GetLength(1); i++)
             {
-                for(int j = 0; j < massive.Length; j++)
+                for(int j = 0; j < massive.GetLength(1); j++)
                 {
-                    Console.Write($"{i + 1} , {j + 1} значение массива: ");
-                    massive[i , j] = EnterValueInt();
+                    Console.Write($"{i + 1},{j + 1} значение массива: ");
+                    massive[i, j] = EnterValueInt();
                 }
 
             }
-            Console.WriteLine("Ваш массив:");
-            for (int i = 0; i < massive.Length; i++)
+            Console.WriteLine("Ваша матрица:");
+            for (int i = 0; i < massive.GetLength(0); i++)
             {
-                for (int j = 0; j < massive.Length; j++)
+                for (int j = 0; j < massive.GetLength(1); j++)
                 {
-                    Console.Write(massive[i , j]);
+                    Console.Write($"{massive[i, j]} ");
                     
                 }
+                Console.WriteLine();
 
             }
+
         }
         
         static int EnterValueInt()
