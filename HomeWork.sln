@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork1.1", "HomeWork1\Ho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork1.2", "HomeWork1.2\HomeWork1.2.csproj", "{76B73A44-EC55-4D32-90D7-5DE009719B51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWork2", "HomeWork2\HomeWork2.csproj", "{54DF5CAA-A799-4234-9C7F-4F1E46B7F0DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeWork2.1", "HomeWork2\HomeWork2.1.csproj", "{54DF5CAA-A799-4234-9C7F-4F1E46B7F0DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
