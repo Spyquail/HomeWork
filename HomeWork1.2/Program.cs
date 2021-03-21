@@ -15,15 +15,20 @@ namespace HomeWork1._2
                 char symbol = Convert.ToChar(Console.ReadLine());
                 switch(symbol)
                 {
-                    case 'с': y++; break;
+                    case 'с': 
                     case 'С': y++; break;
-                    case 'ю': y--; break;
+                    case 'ю': 
                     case 'Ю': y--; break;
-                    case 'в': x++; break;
+                    case 'в': 
                     case 'В': x++; break;
-                    case 'з': x--; break;
+                    case 'з': 
                     case 'З': x--; break;
-                    default:  Console.WriteLine("Нет такого пути"); break;
+                    default:  
+                    {
+                        Console.WriteLine("Нет такого пути, введите ещё раз");
+                        i--;
+                        break;
+                    }
                 }
             }
             double distace = Math.Sqrt((x * x) + (y * y));
