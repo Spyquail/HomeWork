@@ -9,7 +9,7 @@ namespace HomeWork_2._2
             Console.Write("Введите размер квадратной матрицы: ");
             int arraySize = EnterValueInt();
             int[,] massive = new int[arraySize, arraySize];
-            for (int i = 0; i < massive.GetLength(1); i++) // Цикл для ввода значений
+            for (int i = 0; i < massive.GetLength(0); i++) // Цикл для ввода значений
             {
                 for(int j = 0; j < massive.GetLength(1); j++)
                 {
