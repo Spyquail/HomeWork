@@ -27,7 +27,8 @@ namespace ExtraWork2._1
                             massive[y, positionHorisontal] = volue; 
                             volue++;
                             intermediativeVar = y;
-                            if (volue >= arraySize * arraySize) break; //Условие окончания массива и выход из цикла
+                            if (volue >= arraySize * arraySize) 
+                                break; //Условие окончания массива и выход из цикла
                         }
                         positionVertical = intermediativeVar;
                         volue--;
@@ -70,9 +71,12 @@ namespace ExtraWork2._1
                     numberValues++;
                     count = 0;
                 }
-                if (loopVariable == 4) loopVariable = 1; // Условие для смены направления 
-                else loopVariable++;
-                if (volue >= (arraySize * arraySize) - 2) break; // Условие для выхода из цикла при окончании 
+                if (loopVariable == 4) 
+                    loopVariable = 1; // Условие для смены направления 
+                else 
+                    loopVariable++;
+                if (volue >= (arraySize * arraySize) - 2) 
+                    break; // Условие для выхода из цикла при окончании 
             }
             for (int i = 0; i < massive.GetLength(0); i++) // Цикл для вывода массива на консоль
             {
