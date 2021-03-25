@@ -4,7 +4,7 @@ namespace ExtraWork2._1
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args)   // Сложность алгоритма O(n)
         {
             Console.WriteLine("Введите размер матрицы n для формулы (2*n + 1): ");
             int enterVolue = Convert.ToInt32(Console.ReadLine());

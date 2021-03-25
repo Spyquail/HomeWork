@@ -4,7 +4,7 @@ namespace HomeWork2
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args) // Сложность алгоритма O(n)
         {
             Console.Write("Введите размер массива: ");
             int arraySize = EnterValueInt();
