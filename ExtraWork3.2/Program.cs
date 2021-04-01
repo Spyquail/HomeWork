@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ExtraWork3._1
+namespace ExtraWork3._2
 {
     class Program
     {
-        static List<int> numbers = new List<int>(0);
+        static List<int> numbers1 = new List<int>(0);
+        static List<int> numbers2 = new List<int>(0);
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите числа (отрицательное число означает окончание ввода) ");
+            Console.WriteLine("Введите числа для первого набора (отрицательное число означает окончание ввода) ");
             Console.Write("Первое число: ");
-            EnterNumbers();
-            PrintNumbers();
+            EnterNumbers(numbers1);
+            PrintNumbers(numbers1);
+            Console.WriteLine("Введите числа для второго набора (отрицательное число означает окончание ввода) ");
+            Console.Write("Первое число: ");
+            EnterNumbers(numbers2);
+            PrintNumbers(numbers2);
             CheckNumbers();
         }
-        static public void EnterNumbers()
+        static public void EnterNumbers(List<int> numbers)
         {
             int enteredValue = 1;
             while (enteredValue >= 0)
@@ -39,10 +44,10 @@ namespace ExtraWork3._1
             Console.Clear();
             numbers.Remove(enteredValue);
         }
-        static public void PrintNumbers()
+        static public void PrintNumbers(List<int> numbers)
         {
             Console.WriteLine("Введённые числа: ");
-            foreach(var temp in numbers)
+            foreach (var temp in numbers)
             {
                 Console.Write($"{temp} ");
             }
@@ -50,13 +55,7 @@ namespace ExtraWork3._1
         }
         static public void CheckNumbers()
         {
-            int count = 0;
-            for(int i = 1; i < (numbers.Count - 1); i++)
-            {
-                if ((numbers[i] > numbers[i - 1]) && (numbers[i] > numbers[i + 1]))
-                    count++;
-            }
-            Console.WriteLine($"Количество чисел, у которых есть соседи со значением меньше самого числа: {count}");
+            
         }
     }
 }

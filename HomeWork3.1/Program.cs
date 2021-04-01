@@ -5,6 +5,7 @@ namespace HomeWork3._1
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             Console.Write("Введите время работы почты в минутах: ");
@@ -24,7 +25,7 @@ namespace HomeWork3._1
                 totalMinutes -= time.Dequeue();
                 visitorsServed++;
             }
-            Console.Write($"Количество обслуженных посетителей: {visitorsServed}");
+            Console.Write($"Количество необслуженных посетителей: {numberVisitors - visitorsServed}");
         }
         static int EnterInt() // Метод для ввода числа и проверки, что это целое положительное число
         {
