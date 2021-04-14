@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectRestaurant
 {
@@ -276,14 +277,67 @@ namespace ProjectRestaurant
             //{
             //    Console.WriteLine("Такого формата нет ");
             //}
-            //Console.WriteLine("Для перехода в меню нажмите любую клавишу...");
-            //Console.ReadKey();
+            Console.WriteLine("Для перехода в меню нажмите любую клавишу...");
+            Console.ReadKey();
         }
         static public void SearchFood()
         {
+            Console.Clear();
+            Console.WriteLine("Введите название того, что хотите найти: ");
+            string enteredSearchQuery = Console.ReadLine();
+            var searchedFoodMenu = from query in foodMenu
+                                   where query.Value.Name.Contains(enteredSearchQuery)
+                                   select query;
 
+            if (searchedFoodMenu.Count() == 0)
+            {
+                Console.WriteLine("Ничего не найдено :(");
+            }
+            else
+            {
+                Console.WriteLine("Найдено: ");
+                foreach (KeyValuePair<int, Dish> keyValue in searchedFoodMenu)
+                {
+                    Console.WriteLine(keyValue.Value.Name);
+                }
+            }
+            Console.WriteLine("Нажмите любую клавишу для выхода в меню...");
+            Console.ReadKey();
         }
-
+        static string EnterString()
+        {
+            string enteredString = "";
+            while (true)
+            {
+                ConsoleKeyInfo pressedKey = Console.ReadKey(false);
+                if (pressedKey.Key == ConsoleKey.Escape)
+                {
+                    enteredString = "Esc";
+                    break;
+                }
+                else
+                {
+                    if (pressedKey.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if (pressedKey.Key == ConsoleKey.Backspace)
+                        {
+                            enteredString = enteredString.Remove(enteredString.Length - 1);
+                            Console.Write(" \b");
+                        }
+                        else
+                        {
+                            enteredString = enteredString + pressedKey.KeyChar;
+                        }
+                    }
+                }
+            }
+            Console.WriteLine();
+            return enteredString;
+        }
         static void Main(string[] args)
         {
             InitializationFoodMenu();
@@ -300,7 +354,7 @@ namespace ProjectRestaurant
                         PrintFoodMenu();   
                         break;
                     case ConsoleKey.D2:  //"2 - Поиск блюда",
-                       // RemoveFormat();
+                        SearchFood();
                         break;
                     case ConsoleKey.D3: //"3 - Вывести блюда определённого типа"
                         //PrintFormat();
@@ -345,7 +399,7 @@ namespace ProjectRestaurant
                         case ConsoleKey.D3: //""3 - Добавить тип блюда",
                             AddTypeFood();
                             break;
-                        case ConsoleKey.D4: //""3 - Добавить тип блюда",
+                        case ConsoleKey.D4: //""4 - Удалить тип блюда",
                             RemoveTypeFood();
                             break;
                         case ConsoleKey.D5: //""5 - Изменить имеющееся блюдо",
@@ -364,39 +418,6 @@ namespace ProjectRestaurant
             }
             
         }
-        static string EnterString()
-        {
-            string enteredString = "";
-            while (true)
-            {
-                ConsoleKeyInfo pressedKey = Console.ReadKey(false);
-                if (pressedKey.Key == ConsoleKey.Escape)
-                {
-                    enteredString = "Esc";
-                    break;
-                }
-                else
-                {
-                    if (pressedKey.Key == ConsoleKey.Enter)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        if(pressedKey.Key == ConsoleKey.Backspace)
-                        {
-                            enteredString = enteredString.Remove(enteredString.Length - 1);
-                            Console.Write(" \b");
-                        }
-                        else
-                        {
-                            enteredString = enteredString + pressedKey.KeyChar;
-                        }
-                    }
-                }
-            }
-            Console.WriteLine();
-            return enteredString;
-        }
+        
     }
 }
