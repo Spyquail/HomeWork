@@ -23,7 +23,8 @@ namespace ProjectRestaurant
         "3 - Добавить тип блюда",
         "4 - Удалить тип блюда",
         "5 - Изменить имеющееся блюдо",
-        "6 - Выход в главное меню"
+        "6 - Инфляция",
+        "7 - Выход в главное меню"
         };
         static public List<string>  TypesFood = new List<string>();
         static string login = "admin";
@@ -85,6 +86,8 @@ namespace ProjectRestaurant
                         Console.WriteLine();
                     }
                 }
+                Console.WriteLine("Страница " + (count / 9 + 1));
+                Console.WriteLine();
                 Console.WriteLine("Чтобы узнать подробнее введите номер блюда. \"0\" - страница назад. \"-\" - страница вперёд.");
                 Console.WriteLine("\"=\" - для фильтрации по цене. \"Esc\" - для выхода в главное меню");
                 int stringToInt;
@@ -126,10 +129,26 @@ namespace ProjectRestaurant
                         count -= 9;
                         goto PrintNewPage;
                     }
+                    else
+                    {
+                        if (enteredStringKey.Key == ConsoleKey.D0)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Это первая страница");
+                        }
+                    }
                     if (enteredStringKey.Key == ConsoleKey.OemMinus && count < indexOfDish.Count - 9)
                     {
                         count += 9;
                         goto PrintNewPage;
+                    }
+                    else
+                    {
+                        if (enteredStringKey.Key == ConsoleKey.OemMinus)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Это последняя страница");
+                        }    
                     }
                     if (enteredStringKey.Key == ConsoleKey.OemPlus)
                     {
@@ -143,107 +162,198 @@ namespace ProjectRestaurant
                 }
             }
         }
+        static public void PrintTypeFood()
+        {
+            string enteredTypeFood = "";
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Выберите тип блюда: ");
+                int i = 1;
+                for (i = 1; i <= TypesFood.Count; i++)
+                {
+                    Console.WriteLine(i + ". " + TypesFood[i - 1]);
+                }
+                ConsoleKeyInfo enteredSymbol = Console.ReadKey(true);
+                if (enteredSymbol.Key == ConsoleKey.Escape)
+                    goto EndPrintTypeFood;
+                int stringToInt;
+                char enteredChar = enteredSymbol.KeyChar;
+                string enteredString = "";
+                enteredString = enteredString + enteredChar;
+                Console.Clear();
+                if (int.TryParse(enteredString, out stringToInt))
+                {
+                    if ((i - stringToInt) >= 0)
+                    {
+                        enteredTypeFood = TypesFood[stringToInt - 1];
+                        var searchedFoodMenu = from query in foodMenu
+                                               where query.Value.Type.Contains(enteredTypeFood)
+                                               select query;
+                        Dictionary<int, Dish> printedFoodMenuClone = new Dictionary<int, Dish>();
+                        foreach (var temp in searchedFoodMenu)
+                        {
+                            printedFoodMenuClone.Add(temp.Key, temp.Value);
+                        }
+                        PrintFoodMenu(printedFoodMenuClone);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
+                        Console.ReadKey(true);
+                    }
+                }
+                else
+                {
+                    if (enteredSymbol.Equals("Esc"))
+                        goto EndPrintTypeFood;
+                    Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
+                    Console.ReadKey(true);
+                }
+            }
+        EndPrintTypeFood:
+            Console.WriteLine();
+        }
         static public void CheckCart()
         {
             int count = 0;
             while (true)
             {
-                if(order.Count == 0)
+                Console.Clear();
+                if (order.Count == 0)
                 {
                     Console.WriteLine("Корзина пуста, нажмите любую клавишу для возврата...");
                     Console.ReadKey(true);
                     goto endCheckCart;
                 }
+                int amount = 1;
                 List<int> sortedOrder = order.OrderBy(x => x).ToList();
-
+                List<int> uniqueSortedOrder = new List<int>();
+                if(sortedOrder.Count == 1)
+                {
+                    uniqueSortedOrder.Add(amount);
+                }
+                for (int i = 1; i < sortedOrder.Count; i++)
+                {
+                    if (sortedOrder[i] == sortedOrder[i - 1])
+                    {
+                        amount++;
+                        sortedOrder.RemoveAt(i);
+                        i--;
+                    }
+                    else
+                    {
+                        uniqueSortedOrder.Add(amount);
+                        amount = 1;
+                    }
+                    if (i == sortedOrder.Count - 1)
+                        uniqueSortedOrder.Add(amount);
+                }
+            PrintNewPage:
                 Console.Clear();
-                int x = 1;
                 for (int i = count; i < (count + 9); i++)
                 {
-                    if (i < sortedOrder.Count())
+                    if (i < sortedOrder.Count)
                     {
-                        if(i != count + 8)
+                        Console.Write((i - count + 1) + " " + foodMenu[sortedOrder[i]].Name + " " + foodMenu[sortedOrder[i]].Price + " руб x" + uniqueSortedOrder[i]);
+                        Console.WriteLine();
+                    }
+                }
+                int totalPrice = 0;
+                for(int i = 0; i < sortedOrder.Count; i++)
+                {
+                    totalPrice += foodMenu[sortedOrder[i]].Price * uniqueSortedOrder[i];
+                }
+                Console.WriteLine("Общая цена: " + totalPrice);
+                Console.WriteLine("Страница " + (count / 9 + 1));
+                Console.WriteLine();
+                Console.WriteLine("Чтобы изменить блюдо, введите его номер. \"0\" - страница назад. \"-\" - страница вперёд.");
+                Console.WriteLine("\"Esc\" - для выхода в главное меню");
+                int stringToInt;
+                ConsoleKeyInfo enteredStringKey = Console.ReadKey(true);
+                char enteredChar = enteredStringKey.KeyChar;
+                string enteredString = "";
+                enteredString = enteredString + enteredChar;
+                if (int.TryParse(enteredString, out stringToInt) && enteredStringKey.Key != ConsoleKey.D0)
+                {
+                    if (stringToInt <= 9 && stringToInt > 0 && stringToInt + count <= sortedOrder.Count)
+                    {
+                        while (true)
                         {
-                            if (sortedOrder[i] == sortedOrder[i + 1])
+                            Console.Clear();
+                            if (sortedOrder.Count == 0)
                             {
-                                x++;
+                                Console.WriteLine("Корзина пуста, нажмите любую клавишу для возврата...");
+                                Console.ReadKey(true);
+                                goto endCheckCart;
+                            }
+                            Console.WriteLine(foodMenu[sortedOrder[stringToInt + count - 1]].Name + " Количество: " + uniqueSortedOrder[stringToInt + count - 1] + " Тип: " + foodMenu[sortedOrder[stringToInt + count - 1]].Type + " Цена: " + foodMenu[sortedOrder[stringToInt + count - 1]].Price + " руб" + " Время готовки: " + foodMenu[sortedOrder[stringToInt + count - 1]].TimeCooking + " минут");
+                            Console.WriteLine("Описание: " + foodMenu[sortedOrder[stringToInt + count - 1]].Description);
+                            Console.WriteLine("Нажмите \"1\" для добавления в коризну. \"2\" - удалить одну единицу блюда. Нажмите любую другую клавишу для перехода к списку блюд...");
+                            ConsoleKeyInfo enteredSymbol = Console.ReadKey(true);
+                            if (enteredSymbol.Key == ConsoleKey.D1)
+                            {
+                                uniqueSortedOrder[stringToInt + count - 1]++;
+                                order.Add(sortedOrder[stringToInt + count - 1]);
                             }
                             else
                             {
-                                Console.Write((i - count + 1) + " " + foodMenu[sortedOrder[i]].Name + " " + foodMenu[sortedOrder[i]].Price + " руб" + "  x" + x);
-                                Console.WriteLine();
-                                x = 1;
-                            }
+                                if (enteredSymbol.Key == ConsoleKey.D2)
+                                {
+                                    uniqueSortedOrder[stringToInt + count - 1]--;
+                                    order.Remove(sortedOrder[stringToInt + count - 1]);
+                                    if (uniqueSortedOrder[stringToInt + count - 1] == 0)
+                                    {
+                                        sortedOrder.RemoveAt(stringToInt + count - 1);
+                                        break;
+                                    }         
+                                }  
+                                else
+                                    break;
+                            }     
                         }
-                        if(sortedOrder[i] == sortedOrder[i + 1] )
-                        {
-                            x++;
-                        }
-                        else
-                        {
-                            Console.Write((i - count + 1) + " " + foodMenu[sortedOrder[i]].Name + " " + foodMenu[sortedOrder[i]].Price + " руб" + "  x" + x);
-                            Console.WriteLine();
-                            x = 1;
-                        }
-                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("Нет такого блюда. Нажмите любую клавишу для выхода к списку блюд...");
+                        Console.ReadKey();
                     }
                 }
-                //Console.WriteLine("Чтобы узнать подробнее введите номер блюда. \"0\" - страница назад. \"-\" - страница вперёд.");
-                //Console.WriteLine("\"=\" - для фильтрации по цене. \"Esc\" - для выхода в главное меню");
-                //int stringToInt;
-                //ConsoleKeyInfo enteredStringKey = Console.ReadKey(true);
-                //char enteredChar = enteredStringKey.KeyChar;
-                //string enteredString = "";
-                //enteredString = enteredString + enteredChar;
-                //if (int.TryParse(enteredString, out stringToInt) && enteredStringKey.Key != ConsoleKey.D0)
-                //{
-                //    if (stringToInt <= 9 && stringToInt > 0 && stringToInt + count <= order.Count)
-                //    {
-                //        Console.Clear();
-                //        Console.WriteLine(printedFoodMenu[indexOfDish[stringToInt + count - 1]].Name + " Тип: " + printedFoodMenu[indexOfDish[stringToInt + count - 1]].Type + " Цена: " + printedFoodMenu[indexOfDish[stringToInt + count - 1]].Price + " руб" + " Время готовки: " + printedFoodMenu[indexOfDish[stringToInt + count - 1]].TimeCooking + " минут");
-                //        Console.WriteLine("Описание: " + printedFoodMenu[indexOfDish[stringToInt + count - 1]].Description);
-                //        Console.WriteLine("Нажмите \"1\" для добавления в коризну. Нажмите любую другую клавишу для перехода к списку блюд...");
-                //        while (true)
-                //        {
-                //            if (Console.ReadKey(true).Key == ConsoleKey.D1)
-                //            {
-                //                order.Add(indexOfDish[stringToInt + count - 1);
-                //                Console.WriteLine("Блюдо добавлено в заказ");
-                //            }
-                //            else
-                //                break;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine("Нет такого блюда. Нажмите любую клавишу для выхода к списку блюд...");
-                //        Console.ReadKey();
-                //    }
-                //}
-                //else
-                //{
-                //    if (enteredStringKey.Key == ConsoleKey.Escape)
-                //        break;
-                //    if (enteredStringKey.Key == ConsoleKey.D0 && count >= 9)
-                //    {
-                //        count -= 9;
-                //        goto PrintNewPage;
-                //    }
-                //    if (enteredStringKey.Key == ConsoleKey.OemMinus && count < indexOfDish.Count - 9)
-                //    {
-                //        count += 9;
-                //        goto PrintNewPage;
-                //    }
-                //    if (enteredStringKey.Key == ConsoleKey.OemPlus)
-                //    {
-
-                //        FilterMenu(printedFoodMenu);
-                //        break;
-                //    }
-                //    Console.WriteLine();
-                //    Console.WriteLine("Неверная кнопка. Нажмите любую клавишу для выхода к списку блюд...");
-                //    Console.ReadKey();
-                //}
+                else
+                {
+                    if (enteredStringKey.Key == ConsoleKey.Escape)
+                        break;
+                    if (enteredStringKey.Key == ConsoleKey.D0 && count >= 9)
+                    {
+                        count -= 9;
+                        goto PrintNewPage;
+                    }
+                    else
+                    {
+                        if (enteredStringKey.Key == ConsoleKey.D0)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Это первая страница");
+                        }
+                    }
+                    if (enteredStringKey.Key == ConsoleKey.OemMinus && count < sortedOrder.Count - 9)
+                    {
+                        count += 9;
+                        goto PrintNewPage;
+                    }
+                    else
+                    {
+                        if (enteredStringKey.Key == ConsoleKey.OemMinus)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Это последняя страница");
+                        }
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("Неверная кнопка. Нажмите любую клавишу для выхода к списку блюд...");
+                    Console.ReadKey();
+                }
             }
         endCheckCart:
             Console.WriteLine();
@@ -445,8 +555,6 @@ namespace ProjectRestaurant
                 int enteredIDDishToInt;
                 if (int.TryParse(enteredIDDish, out enteredIDDishToInt))
                 {
-
-
                     if(foodMenu.ContainsKey(enteredIDDishToInt))
                     {
                         Console.WriteLine("Вы желаете удалить " + foodMenu[enteredIDDishToInt].Name);
@@ -498,18 +606,38 @@ namespace ProjectRestaurant
             }
             else
             {
-                Console.WriteLine("Найдено: ");
-                foreach (KeyValuePair<int, Dish> keyValue in searchedFoodMenu)
+                Dictionary<int, Dish> printedFoodMenuClone = new Dictionary<int, Dish>();
+                foreach (var temp in searchedFoodMenu)
                 {
-                    Console.WriteLine(keyValue.Value.Name);
+                    printedFoodMenuClone.Add(temp.Key, temp.Value);
                 }
+                PrintFoodMenu(printedFoodMenuClone);
+                goto endSearchFood;
             }
             Console.WriteLine("Нажмите любую клавишу для выхода в меню...");
             Console.ReadKey(true);
         endSearchFood:
             Console.WriteLine();
         }
-        //static public Inflation
+        static public void Inflation() // Не доделано
+        {
+            var changedFoodMenu = foodMenu.Select(x => x.Value.Price * 100);
+            List<int> indexOfDish = new List<int>();
+            foreach(var temp in foodMenu)
+            {
+                indexOfDish.Add(temp.Key);
+            }
+            for(int i = 0; i < indexOfDish.Count; i++ )
+            {
+                foodMenu[indexOfDish[i]].Price = changedFoodMenu.ElementAt(i);
+            }
+            Console.Clear();
+            Console.WriteLine("Всё подорожало в 100 раз!!!");
+            Console.WriteLine("Самое дорогое блюдо стоит: " + changedFoodMenu.Max() / 100); //???
+            Console.WriteLine("Самое дешёвое блюдо стоит: " + changedFoodMenu.Min() / 100);
+            Console.WriteLine("Цена за все единицы блюд: " + changedFoodMenu.Aggregate((a, b) => a + b));
+            Console.ReadKey(true);
+        }
         static public void ChangeFood()
         {
             while (true)
@@ -603,7 +731,6 @@ namespace ProjectRestaurant
             {
                 printedFoodMenuClone.Add(temp.Key, temp.Value);
             }
-            //Console.ReadKey();
             PrintFoodMenu(printedFoodMenuClone);
         }
         static public string EnterString()
@@ -662,7 +789,7 @@ namespace ProjectRestaurant
                         SearchFood();
                         break;
                     case ConsoleKey.D3: //"3 - Вывести блюда определённого типа"
-                        //PrintFormat();
+                        PrintTypeFood();
                         break;
                     case ConsoleKey.D4:  //"4 - Проверить корзину
                         CheckCart();
@@ -716,9 +843,12 @@ namespace ProjectRestaurant
                         case ConsoleKey.D5: //""5 - Изменить имеющееся блюдо",
                             ChangeFood();
                             break;
+                        case ConsoleKey.D6: //""6 - Инфляция
+                            Inflation();
+                            break;
                         default: continue;
                     }
-                } while (key != ConsoleKey.D6); // "6 - Выход в главное меню"
+                } while (key != ConsoleKey.D7); // "6 - Выход в главное меню"
 
             }
             else
