@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
+
 
 
 namespace ProjectRestaurantLibrary
@@ -73,25 +73,8 @@ namespace ProjectRestaurantLibrary
             if (enteredName != "Esc")
                 name = enteredName;
         }
-        static public List<string> TypesFood = new List<string>();
         public void ChangeType()
         {
-            
-            string nameTxtTypesFood = "TypesFood.txt";
-            if (File.Exists(nameTxtTypesFood))
-            {
-                using (StreamReader sr = new StreamReader(nameTxtTypesFood))
-                {
-                    while (true)
-                    {
-                        string readedType = sr.ReadLine();
-                        if (readedType == null)
-                            break;
-                        TypesFood.Add(readedType);
-                    }
-                }
-            }
-            string enteredTypeFood = "";
             while (true)
             {
                 Console.Clear();
@@ -99,12 +82,12 @@ namespace ProjectRestaurantLibrary
                 Console.WriteLine("Текущий тип блюда:" + type);
                 Console.WriteLine("Выберите новый тип блюда: ");
                 int i = 1;
-                for (i = 1; i <= TypesFood.Count; i++)
+                for (i = 1; i <= Project.TypesFood.Count; i++)
                 {
-                    Console.WriteLine(i + ". " + TypesFood[i - 1]);
+                    Console.WriteLine(i + ". " + Project.TypesFood[i - 1]);
                 }
                 Console.WriteLine("Для добавления нового типа введите " + i);
-                string enteredSymbol = Program.EnterString();
+                string enteredSymbol = Project.EnterString();
                 int stringToInt;
                 Console.Clear();
                 if (int.TryParse(enteredSymbol, out stringToInt))
@@ -113,18 +96,18 @@ namespace ProjectRestaurantLibrary
                     {
                         if (stringToInt == i)
                         {
-                            Program.AddTypeFood();
+                            Project.AddTypeFood();
                         }
                         else
                         {
-                            type = Program.TypesFood[stringToInt - 1];
+                            type = Project.TypesFood[stringToInt - 1];
                             break;
                         }
                     }
                     else
                     {
                         Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                     }
                 }
                 else
@@ -132,7 +115,7 @@ namespace ProjectRestaurantLibrary
                     if (enteredSymbol.Equals("Esc"))
                         break;
                     Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }
             }
         }
@@ -156,7 +139,7 @@ namespace ProjectRestaurantLibrary
                         break;
                     Console.WriteLine("Неверное значение");
                     Console.WriteLine("Для возвращения нажмите любую клавишу...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }   
             }
         }
@@ -180,7 +163,7 @@ namespace ProjectRestaurantLibrary
                         break;
                     Console.WriteLine("Неверное значение");
                     Console.WriteLine("Для возвращения нажмите любую клавишу...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }
             }
         }

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProjectRestaurantLibrary;
 using System.IO;
 
-namespace ProjectRestaurant
+namespace ProjectRestaurantLibrary
 {
-    public class Program
+    public class Project
     {
         static public string[] MenuStrings =
         {
@@ -183,7 +182,7 @@ namespace ProjectRestaurant
                     else
                     {
                         Console.WriteLine("Нет такого блюда. Нажмите любую клавишу для выхода к списку блюд...");
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                     }
                 }
                 else
@@ -224,7 +223,7 @@ namespace ProjectRestaurant
                     }
                     Console.WriteLine();
                     Console.WriteLine("Неверная кнопка. Нажмите любую клавишу для выхода к списку блюд...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }
             }
         }
@@ -383,7 +382,7 @@ namespace ProjectRestaurant
                     else
                     {
                         Console.WriteLine("Нет такого блюда. Нажмите любую клавишу для выхода к списку блюд...");
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                     }
                 }
                 else
@@ -418,7 +417,7 @@ namespace ProjectRestaurant
                     }
                     Console.WriteLine();
                     Console.WriteLine("Неверная кнопка. Нажмите любую клавишу для выхода к списку блюд...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }
             }
         endCheckCart:
@@ -462,7 +461,7 @@ namespace ProjectRestaurant
                     else
                     {
                         Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                     }
                 }
                 else
@@ -470,7 +469,7 @@ namespace ProjectRestaurant
                     if (enteredSymbol.Equals("Esc"))
                         goto EndAddingDish;
                     Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }
             }
             Console.WriteLine("Тип: " + enteredTypeFood);
@@ -532,8 +531,8 @@ namespace ProjectRestaurant
             string enteredDescription = EnterString();
             foodMenu.Add((foodMenu.Count + 1), new Dish(enteredNameFood, enteredTypeFood, enteredPriceFood, enteredTimeCooking, enteredDescription));
             Console.WriteLine("Блюдо добавлено! Для перехода в меню нажмите любую клавишу...");
-            Program.SaveInTxtFoodMenu();
-            Console.ReadKey();
+            Project.SaveInTxtFoodMenu();
+            Console.ReadKey(true);
         EndAddingDish:
             Console.WriteLine();
         }
@@ -547,7 +546,7 @@ namespace ProjectRestaurant
                 goto endAddTypeFood;
             TypesFood.Add(enteredString);
             Console.WriteLine("Тип блюда добавлен! Нажмите любую клавишу для возврата... ");
-            Console.ReadKey();
+            Console.ReadKey(true);
         endAddTypeFood:
             Console.WriteLine();
 
@@ -585,13 +584,13 @@ namespace ProjectRestaurant
                         else
                         {
                             Console.WriteLine("Отмена удалена. Нажмите любую клавиш для возврата...");
-                            Console.ReadKey();
+                            Console.ReadKey(true);
                         }
                     }
                     else
                     {
                         Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
-                        Console.ReadKey();
+                        Console.ReadKey(true);
                     }
                 }
                 else
@@ -599,12 +598,12 @@ namespace ProjectRestaurant
                     if (enteredString.Equals("Esc"))
                         break;
                     Console.WriteLine("Нет такого типа. Нажмите любую клавиш для возврата...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                 }
             }
 
             Console.WriteLine("Для перехода в меню нажмите любую клавишу...");
-            Console.ReadKey();
+            Console.ReadKey(true);
         }
         static public void RemoveFood()
         {
@@ -844,7 +843,7 @@ namespace ProjectRestaurant
             Console.WriteLine();
             return enteredString;
         }
-        static void Main(string[] args)
+        public static void Run()
         {
             InitializationFoodMenu();
             ConsoleKey key = ConsoleKey.Enter;
@@ -929,7 +928,7 @@ namespace ProjectRestaurant
             {
                 Console.WriteLine("Неверный пароль");
                 Console.WriteLine("Нажмите любую клавишу чтобы выйти в главное меню...");
-                Console.ReadKey();
+                Console.ReadKey(true);
             }
         endAdminMenu:
             Console.WriteLine();
