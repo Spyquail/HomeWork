@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
-namespace ProjectRestaurant
+
+namespace ProjectRestaurantLibrary
 {
-    class Dish
+    public class Dish
     {
         private string name;
         private string type;
@@ -18,11 +18,6 @@ namespace ProjectRestaurant
             get
             {
                 return name;
-            }
-            set
-            {
-                
-               
             }
         }
         public string Type
@@ -77,10 +72,25 @@ namespace ProjectRestaurant
             string enteredName = EnterString(name);
             if (enteredName != "Esc")
                 name = enteredName;
-            
         }
+        static public List<string> TypesFood = new List<string>();
         public void ChangeType()
         {
+            
+            string nameTxtTypesFood = "TypesFood.txt";
+            if (File.Exists(nameTxtTypesFood))
+            {
+                using (StreamReader sr = new StreamReader(nameTxtTypesFood))
+                {
+                    while (true)
+                    {
+                        string readedType = sr.ReadLine();
+                        if (readedType == null)
+                            break;
+                        TypesFood.Add(readedType);
+                    }
+                }
+            }
             string enteredTypeFood = "";
             while (true)
             {
@@ -89,9 +99,9 @@ namespace ProjectRestaurant
                 Console.WriteLine("Текущий тип блюда:" + type);
                 Console.WriteLine("Выберите новый тип блюда: ");
                 int i = 1;
-                for (i = 1; i <= Program.TypesFood.Count; i++)
+                for (i = 1; i <= TypesFood.Count; i++)
                 {
-                    Console.WriteLine(i + ". " + Program.TypesFood[i - 1]);
+                    Console.WriteLine(i + ". " + TypesFood[i - 1]);
                 }
                 Console.WriteLine("Для добавления нового типа введите " + i);
                 string enteredSymbol = Program.EnterString();
@@ -149,7 +159,6 @@ namespace ProjectRestaurant
                     Console.ReadKey();
                 }   
             }
-            
         }
         public void ChangeTimeCooking()
         {

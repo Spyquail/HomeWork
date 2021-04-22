@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections.Specialized;
+using ProjectRestaurantLibrary;
+using System.IO;
 
 namespace ProjectRestaurant
 {
-    class Program
+    public class Program
     {
         static public string[] MenuStrings =
         {
@@ -42,29 +43,94 @@ namespace ProjectRestaurant
         }
         static public void InitializationFoodMenu() // Название блюда, тип, цена, время готовки, описание
         {
-            foodMenu.Add(1, new Dish ( "Салат \"Нисуаз\"", "Салат", 590, 20, "Обжаренные кусочки филе тунца, анчоусы, свежий огурец, помидоры черри, зелёная стручковая фасоль, отварной мини картофель, перепелиное яйцо, салат Айсберг, кольца красного лука, каперсы 260 г."));
-            foodMenu.Add(2, new Dish ( "Салат овощной \"Греческий\"", "Салат", 550, 15, "Свежие огурцы, болгарский перец, помидоры, маслины, оливки, сыр Фета, красный лук, запрвляется соусом \"бальзамик\" 250 г."));
-            foodMenu.Add(3, new Dish ( "Салат с куриной печенью", "Салат", 570, 25, "Листья салатов Лолло Россо, Руккола и Романо с обжаренными кусочками куриной печени, с помидорами черри и дольками персика Заправляется соево-медовым соусом 230 г."));
-            foodMenu.Add(4, new Dish ( "Борщ со сметанной", "Суп", 390, 40, "Говядина, морковь, свёкла, картофель, капуста, лук репчатый, томатная паста, сахар, уксус, масло сливочное, сметана, зелень."));
-            foodMenu.Add(5, new Dish ( "Суп \"Том Ям\"", "Суп", 560, 30, "Самый популярный тайский суп — том ям. У него специфический острый вкус с кисловатым оттенком и очень приятным ароматом, состоящим из сочетания запахов бульона, имбиря, лимонного сорго и других компонентов. Надо сказать, что в самом Таиланде существует много разновидностей этого блюда."));
-            foodMenu.Add(6, new Dish ( "Суп лапша куриная с перепелиным яйцом", "Суп", 380, 40, "Легкий куриный бульон с домашней лапшой, нежным куриным филе и перепелиным яйцом"));
-            foodMenu.Add(7, new Dish ( "Феттучини с лососем и шпинатом", "Паста", 660, 40, "Феттучини с лососем, шпинатом, сливочным соусом и сыром Пармезан 280 г"));
-            foodMenu.Add(8, new Dish ( "Лапша в азиатском стиле", "Паста", 670, 45, "Китайская лапша с овощами и тигровыми креветками 250 г."));
-            foodMenu.Add(9, new Dish ( "Спагетти Карбонара","Паста", 650, 35, "Спагетти с беконом, яйцом, сливочным соусом и сыром Пармезан 260 г."));
-            foodMenu.Add(10, new Dish ( "Стейк из тунца в кунжуте", "Горячее блюдо", 890, 50, "Подается с овощным салатом из свежего огурца, томатов, стручковой фасоли и листьями салата Романо 170/120 г."));
-            foodMenu.Add(11, new Dish ( "Бефстроганов в сливочно-грибном соусе с картофельным пюре", "Горячее блюдо", 690, 45, "Подается с солёным огурцом, свежим помидором и красным луком 160/150 г."));
-            foodMenu.Add(12, new Dish ( "Бургер говяжий", "Горячее блюдо", 650, 30, "Мясная котлета из мяса молодого бычка, булочка, помидор, огурец маринованный, бекон, яйцо сыр Чеддер, красный лук, лист салата Подается с картофелем \"фри\" и фирменным соусом Бургер 140/80/150/30 г."));
-            foodMenu.Add(13, new Dish ( "Наггетсы куриные", "Горячее блюдо", 410, 25, "Подаются с картофелем \"фри\" и сырным соусом 130/150/50 г."));
-            foodMenu.Add(14, new Dish ( "Вареники с картофелем и репчатым луком", "Горячее блюдо", 390, 25, "Подаются со сметаной и луком \"фри\" 210/50/20 г."));
-            foodMenu.Add(15, new Dish ( "Медовик", "Десерт", 280, 30, "Настоящий медовый торт, отличающийся особым вкусом – нежным, изысканным, но при этом абсолютно не приторным. 140г."));
-            foodMenu.Add(16, new Dish ( "\"Наполеон\" с айвой", "Десерт", 280, 25, "Очень вкусный и нежный торт из тех, что готовят на Кавказе. Айва у нас очень популярна и по тому ее часто используют в выпечке, торту она придает необычайный аромат"));
-            foodMenu.Add(17, new Dish ( "Вафли Венские с ванильным кремом", "Десерт", 280, 30, "Венские вафли мягкие и имеют довольно большие размеры. С ванильным кремом. 110г."));
-            foodMenu.Add(18, new Dish ( "Мороженое", "Десерт", 150, 10, "Ванильное, Клубничное, Шоколадное, Фисташковое 1 шарик / 50 г."));
-            TypesFood.Add("Салат");
-            TypesFood.Add("Суп");
-            TypesFood.Add("Паста");
-            TypesFood.Add("Горячее блюдо");
-            TypesFood.Add("Десерт");
+            string nameTxtFoodMenu = "FoodMenu.txt";
+            if (File.Exists(nameTxtFoodMenu))
+            {
+                using (StreamReader sr = new StreamReader(nameTxtFoodMenu)) 
+                {
+                    while(true)
+                    {
+                        string readedString = sr.ReadLine();
+                        if (readedString == null)
+                            break;
+                        string[] words = readedString.Split(new char[] {'|'});
+                        int readedID = int.Parse(words[0]);
+                        string readedName = words[1];
+                        string readedType = words[2];
+                        int readedPrice = int.Parse(words[3]);
+                        int readedTimeCooking = int.Parse(words[4]);
+                        string readedDescription = words[5];
+                        foodMenu.Add(readedID, new Dish(readedName, readedType, readedPrice, readedTimeCooking, readedDescription));
+                    }
+                }
+            }
+            else
+            {
+                foodMenu.Add(1, new Dish("Салат \"Нисуаз\"", "Салат", 590, 20, "Обжаренные кусочки филе тунца, анчоусы, свежий огурец, помидоры черри, зелёная стручковая фасоль, отварной мини картофель, перепелиное яйцо, салат Айсберг, кольца красного лука, каперсы 260 г."));
+                foodMenu.Add(2, new Dish("Салат овощной \"Греческий\"", "Салат", 550, 15, "Свежие огурцы, болгарский перец, помидоры, маслины, оливки, сыр Фета, красный лук, запрвляется соусом \"бальзамик\" 250 г."));
+                foodMenu.Add(3, new Dish("Салат с куриной печенью", "Салат", 570, 25, "Листья салатов Лолло Россо, Руккола и Романо с обжаренными кусочками куриной печени, с помидорами черри и дольками персика Заправляется соево-медовым соусом 230 г."));
+                foodMenu.Add(4, new Dish("Борщ со сметанной", "Суп", 390, 40, "Говядина, морковь, свёкла, картофель, капуста, лук репчатый, томатная паста, сахар, уксус, масло сливочное, сметана, зелень."));
+                foodMenu.Add(5, new Dish("Суп \"Том Ям\"", "Суп", 560, 30, "Самый популярный тайский суп — том ям. У него специфический острый вкус с кисловатым оттенком и очень приятным ароматом, состоящим из сочетания запахов бульона, имбиря, лимонного сорго и других компонентов. Надо сказать, что в самом Таиланде существует много разновидностей этого блюда."));
+                foodMenu.Add(6, new Dish("Суп лапша куриная с перепелиным яйцом", "Суп", 380, 40, "Легкий куриный бульон с домашней лапшой, нежным куриным филе и перепелиным яйцом"));
+                foodMenu.Add(7, new Dish("Феттучини с лососем и шпинатом", "Паста", 660, 40, "Феттучини с лососем, шпинатом, сливочным соусом и сыром Пармезан 280 г"));
+                foodMenu.Add(8, new Dish("Лапша в азиатском стиле", "Паста", 670, 45, "Китайская лапша с овощами и тигровыми креветками 250 г."));
+                foodMenu.Add(9, new Dish("Спагетти Карбонара", "Паста", 650, 35, "Спагетти с беконом, яйцом, сливочным соусом и сыром Пармезан 260 г."));
+                foodMenu.Add(10, new Dish("Стейк из тунца в кунжуте", "Горячее блюдо", 890, 50, "Подается с овощным салатом из свежего огурца, томатов, стручковой фасоли и листьями салата Романо 170/120 г."));
+                foodMenu.Add(11, new Dish("Бефстроганов в сливочно-грибном соусе с картофельным пюре", "Горячее блюдо", 690, 45, "Подается с солёным огурцом, свежим помидором и красным луком 160/150 г."));
+                foodMenu.Add(12, new Dish("Бургер говяжий", "Горячее блюдо", 650, 30, "Мясная котлета из мяса молодого бычка, булочка, помидор, огурец маринованный, бекон, яйцо сыр Чеддер, красный лук, лист салата Подается с картофелем \"фри\" и фирменным соусом Бургер 140/80/150/30 г."));
+                foodMenu.Add(13, new Dish("Наггетсы куриные", "Горячее блюдо", 410, 25, "Подаются с картофелем \"фри\" и сырным соусом 130/150/50 г."));
+                foodMenu.Add(14, new Dish("Вареники с картофелем и репчатым луком", "Горячее блюдо", 390, 25, "Подаются со сметаной и луком \"фри\" 210/50/20 г."));
+                foodMenu.Add(15, new Dish("Медовик", "Десерт", 280, 30, "Настоящий медовый торт, отличающийся особым вкусом – нежным, изысканным, но при этом абсолютно не приторным. 140г."));
+                foodMenu.Add(16, new Dish("\"Наполеон\" с айвой", "Десерт", 280, 25, "Очень вкусный и нежный торт из тех, что готовят на Кавказе. Айва у нас очень популярна и по тому ее часто используют в выпечке, торту она придает необычайный аромат"));
+                foodMenu.Add(17, new Dish("Вафли Венские с ванильным кремом", "Десерт", 280, 30, "Венские вафли мягкие и имеют довольно большие размеры. С ванильным кремом. 110г."));
+                foodMenu.Add(18, new Dish("Мороженое", "Десерт", 150, 10, "Ванильное, Клубничное, Шоколадное, Фисташковое 1 шарик / 50 г."));
+                SaveInTxtFoodMenu();
+            }    
+            string nameTxtTypesFood = "TypesFood.txt";
+            if (File.Exists(nameTxtTypesFood))
+            {
+                using (StreamReader sr = new StreamReader(nameTxtTypesFood))
+                {
+                    while (true)
+                    {
+                        string readedType = sr.ReadLine();
+                        if (readedType == null)
+                            break;
+                        TypesFood.Add(readedType);
+                    }
+                }
+            }
+            else
+            {
+                TypesFood.Add("Салат");
+                TypesFood.Add("Суп");
+                TypesFood.Add("Паста");
+                TypesFood.Add("Горячее блюдо");
+                TypesFood.Add("Десерт");
+                SaveInTxtTypesFood();
+            }
+                
+        }
+        static public void SaveInTxtFoodMenu()
+        {
+            string nameTxtFoodMenu = "FoodMenu.txt";
+            using (StreamWriter sw = new StreamWriter(nameTxtFoodMenu, false)) // открываем файл
+            {
+                foreach (var temp in foodMenu)
+                {
+                    sw.Write(temp.Key + "|" + temp.Value.Name + "|" + temp.Value.Type + "|" + temp.Value.Price + "|" + temp.Value.TimeCooking + "|" + temp.Value.Description);
+                    sw.WriteLine();
+                }
+            }
+        }
+        static public void SaveInTxtTypesFood()
+        {
+            string nameTxtTypesFood = "TypesFood.txt";
+            using (StreamWriter sw = new StreamWriter(nameTxtTypesFood, false)) // открываем файл
+            {
+                foreach (var temp in TypesFood)
+                    sw.WriteLine(temp);
+            }
         }
         static public void PrintFoodMenu(Dictionary<int, Dish> printedFoodMenu)
         {
@@ -466,6 +532,7 @@ namespace ProjectRestaurant
             string enteredDescription = EnterString();
             foodMenu.Add((foodMenu.Count + 1), new Dish(enteredNameFood, enteredTypeFood, enteredPriceFood, enteredTimeCooking, enteredDescription));
             Console.WriteLine("Блюдо добавлено! Для перехода в меню нажмите любую клавишу...");
+            Program.SaveInTxtFoodMenu();
             Console.ReadKey();
         EndAddingDish:
             Console.WriteLine();
@@ -512,6 +579,7 @@ namespace ProjectRestaurant
                         {
                             Console.WriteLine("Тип \"" + TypesFood[stringToIntType - 1] + "\" успешно удален");
                             TypesFood.RemoveAt(stringToIntType - 1);
+                            SaveInTxtTypesFood();
                             break;
                         }
                         else
@@ -565,6 +633,7 @@ namespace ProjectRestaurant
                         {
                             Console.WriteLine("Блюдо \"" + foodMenu[enteredIDDishToInt].Name + "\" успешно удален");
                             foodMenu.Remove(enteredIDDishToInt);
+                            SaveInTxtFoodMenu();
                             Console.WriteLine("Нажмите любую клавиш для возврата...");
                             Console.ReadKey(true);
                             break;
@@ -619,7 +688,7 @@ namespace ProjectRestaurant
         endSearchFood:
             Console.WriteLine();
         }
-        static public void Inflation() // Не доделано
+        static public void Inflation() 
         {
             var changedFoodMenu = foodMenu.Select(x => x.Value.Price * 100);
             List<int> indexOfDish = new List<int>();
@@ -676,18 +745,23 @@ namespace ProjectRestaurant
                             {
                                 case 1:
                                     foodMenu[enteredIDDishToInt].ChangeName();
+                                    SaveInTxtFoodMenu();
                                     goto EndChangeDish;
                                 case 2:
                                     foodMenu[enteredIDDishToInt].ChangeType();
+                                    SaveInTxtFoodMenu();
                                     goto EndChangeDish;
                                 case 3:
                                     foodMenu[enteredIDDishToInt].ChangePrice();
+                                    SaveInTxtFoodMenu();
                                     goto EndChangeDish;
                                 case 4:
                                     foodMenu[enteredIDDishToInt].ChangeTimeCooking();
+                                    SaveInTxtFoodMenu();
                                     goto EndChangeDish;
                                 case 5:
                                     foodMenu[enteredIDDishToInt].ChangeDescription();
+                                    SaveInTxtFoodMenu();
                                     goto EndChangeDish;
                                 default:
                                     Console.WriteLine("Нет такого блюда. Нажмите любую клавиш для возврата...");
