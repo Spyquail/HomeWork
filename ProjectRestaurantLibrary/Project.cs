@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Threading;
 // проверка на введение |
 namespace ProjectRestaurantLibrary
 {
@@ -18,13 +19,14 @@ namespace ProjectRestaurantLibrary
         };
         static public string[] AdminMenuStrings =
         {
-        "1 - Добавить блюдо",
-        "2 - Удалить блюдо",
-        "3 - Добавить тип блюда",
-        "4 - Удалить тип блюда",
-        "5 - Изменить имеющееся блюдо",
-        "6 - Инфляция",
-        "7 - Выход в главное меню"
+        "1 - Вывод меню или списка блюд",
+        "2 - Добавить блюдо",
+        "3 - Удалить блюдо",
+        "4 - Добавить тип блюда",
+        "5 - Удалить тип блюда",
+        "6 - Изменить имеющееся блюдо",
+        "7 - Инфляция",
+        "8 - Выход в главное меню"
         };
         static public List<string>  TypesFood = new List<string>();
         static string login = "admin";
@@ -334,7 +336,7 @@ namespace ProjectRestaurantLibrary
                 Console.WriteLine("Страница " + (count / 9 + 1));
                 Console.WriteLine();
                 Console.WriteLine("Чтобы изменить блюдо, введите его номер. \"0\" - страница назад. \"-\" - страница вперёд.");
-                Console.WriteLine("\"Esc\" - для выхода в главное меню");
+                Console.WriteLine("\"=\" - сделать заказ. \"Esc\" - для выхода в главное меню");
                 int stringToInt;
                 ConsoleKeyInfo enteredStringKey = Console.ReadKey(true);
                 char enteredChar = enteredStringKey.KeyChar;
@@ -414,6 +416,20 @@ namespace ProjectRestaurantLibrary
                             Console.Clear();
                             Console.WriteLine("Это последняя страница");
                         }
+                    }
+                    if(enteredStringKey.Key == ConsoleKey.OemPlus)
+                    {
+                        Console.Clear();
+                        int totalTime = 0;
+                        for (int i = 0; i < sortedOrder.Count; i++)
+                        {
+                            totalTime+= foodMenu[sortedOrder[i]].TimeCooking * uniqueSortedOrder[i];
+                        }
+                        Console.WriteLine("Заказ сделан. Время готовки: " + totalTime);
+                        Console.WriteLine("Нажмите любую клавишу для выхода в главное меню...");
+                        order.Clear();
+                        Console.ReadKey(true);
+                        goto endCheckCart;
                     }
                     Console.WriteLine();
                     Console.WriteLine("Неверная кнопка. Нажмите любую клавишу для выхода к списку блюд...");
@@ -710,6 +726,18 @@ namespace ProjectRestaurantLibrary
             }
             else
                 Console.WriteLine("А блюд нет!(");
+            var changedFoodMenu2 = foodMenu.Select(x => x.Value.Price / 100);
+            List<int> indexOfDish2 = new List<int>();
+            foreach (var temp in foodMenu)
+            {
+                indexOfDish2.Add(temp.Key);
+            }
+            for (int i = 0; i < indexOfDish2.Count; i++)
+            {
+                foodMenu[indexOfDish2[i]].Price = changedFoodMenu2.ElementAt(i);
+            }
+            Thread.Sleep(2000);
+            Console.WriteLine("Шутка! :)");
             Console.ReadKey(true);
         }
         static public void ChangeFood()
@@ -798,6 +826,43 @@ namespace ProjectRestaurantLibrary
             }
         EndChangeDish:
             Console.WriteLine();
+        }
+        static public void PrintList()
+        {
+            while(true)
+            {
+                Console.Clear();
+                Console.WriteLine("\"1\" - вывести список блюд \"2\" - вывести список типов блюд");
+                Console.WriteLine("\"Esc\" - выход в меню");
+                ConsoleKey key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Escape)
+                    break;
+                if( key == ConsoleKey.D1)
+                {
+                    Console.Clear();
+                    foreach(var temp in foodMenu)
+                    {
+                        Console.WriteLine(temp.Key + " " + temp.Value.Name + " " + temp.Value.Type + " " + temp.Value.Price);
+                    }
+                    Console.WriteLine("Для повторного выбора нажмите любую клавишу Esc - для выхода в меню");
+                    key = Console.ReadKey(true).Key;
+                    if (key == ConsoleKey.Escape)
+                        break;
+                }
+                if (key == ConsoleKey.D2)
+                {
+                    Console.Clear();
+                    foreach (var temp in TypesFood)
+                    {
+                        Console.WriteLine(temp);
+                    }
+                    Console.WriteLine("Для повторного выбора нажмите любую клавишу Esc - для выхода в меню");
+                    key = Console.ReadKey(true).Key;
+                    if (key == ConsoleKey.Escape)
+                        break;
+                }
+
+            }
         }
         static public void FilterMenu(Dictionary<int, Dish> printedFoodMenu) 
         {
@@ -907,27 +972,30 @@ namespace ProjectRestaurantLibrary
                     key = Console.ReadKey(true).Key;
                     switch (key)
                     {
-                        case ConsoleKey.D1: //1 - Добавить блюдо",
+                        case ConsoleKey.D1: //1 - вывести текущие списки",
+                            PrintList();
+                            break;
+                        case ConsoleKey.D2: //2 - Добавить блюдо",
                             AddFood();
                             break;
-                        case ConsoleKey.D2:  //""2 - Удалить блюдо",
+                        case ConsoleKey.D3:  //"3- Удалить блюдо",
                             RemoveFood();
                             break;
-                        case ConsoleKey.D3: //""3 - Добавить тип блюда",
+                        case ConsoleKey.D4: //"4 - Добавить тип блюда",
                             AddTypeFood();
                             break;
-                        case ConsoleKey.D4: //""4 - Удалить тип блюда",
+                        case ConsoleKey.D5: //"5 - Удалить тип блюда",
                             RemoveTypeFood();
                             break;
-                        case ConsoleKey.D5: //""5 - Изменить имеющееся блюдо",
+                        case ConsoleKey.D6: //6 - Изменить имеющееся блюдо",
                             ChangeFood();
                             break;
-                        case ConsoleKey.D6: //""6 - Инфляция
+                        case ConsoleKey.D7: //7 - Инфляция
                             Inflation();
                             break;
                         default: continue;
                     }
-                } while (key != ConsoleKey.D7); // "6 - Выход в главное меню"
+                } while (key != ConsoleKey.D8); // 8- Выход в главное меню"
 
             }
             else
