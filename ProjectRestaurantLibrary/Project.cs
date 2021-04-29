@@ -154,7 +154,7 @@ namespace ProjectRestaurantLibrary
                 Console.WriteLine("Страница " + (count / 9 + 1));
                 Console.WriteLine();
                 Console.WriteLine("Чтобы узнать подробнее введите номер блюда. \"0\" - страница назад. \"-\" - страница вперёд.");
-                Console.WriteLine("\"=\" - для фильтрации по цене. \"Esc\" - для выхода в главное меню");
+                Console.WriteLine("\"=\" - для сортировки по цене. \"Esc\" - для выхода в главное меню");
                 int stringToInt;
                 ConsoleKeyInfo enteredStringKey = Console.ReadKey(true);
                 char enteredChar = enteredStringKey.KeyChar;
