@@ -123,7 +123,7 @@ namespace ProjectRestaurantLibrary
                     sw.WriteLine();
                 }
             }
-        }
+        } // сохранение меню в файл FoodMenu.txt
         static public void SaveInTxtTypesFood()
         {
             string nameTxtTypesFood = "TypesFood.txt";
@@ -132,7 +132,7 @@ namespace ProjectRestaurantLibrary
                 foreach (var temp in TypesFood)
                     sw.WriteLine(temp);
             }
-        }
+        } //сохранеие типов блюд в файл TypesFood.txt
         static public void PrintFoodMenu(Dictionary<int, Dish> printedFoodMenu)
         {
             int count = 0;
@@ -220,7 +220,7 @@ namespace ProjectRestaurantLibrary
                     if (enteredStringKey.Key == ConsoleKey.OemPlus)
                     {
                         
-                        FilterMenu(printedFoodMenu);
+                        SortingMenu(printedFoodMenu);
                         break;
                     }
                     Console.WriteLine();
@@ -228,7 +228,7 @@ namespace ProjectRestaurantLibrary
                     Console.ReadKey(true);
                 }
             }
-        }
+        } // функция вывода блюд и работы с блюдами
         static public void PrintTypeFood()
         {
             string enteredTypeFood = "";
@@ -281,7 +281,7 @@ namespace ProjectRestaurantLibrary
             }
         EndPrintTypeFood:
             Console.WriteLine();
-        }
+        } // функция вывода блюд определённого типа
         static public void CheckCart()
         {
             int count = 0;
@@ -438,7 +438,7 @@ namespace ProjectRestaurantLibrary
             }
         endCheckCart:
             Console.WriteLine();
-        }
+        } // Переход в корзиеу и взаимодействие с ним
         static public void AddFood()
         {
             string enteredTypeFood = "";
@@ -551,7 +551,7 @@ namespace ProjectRestaurantLibrary
             Console.ReadKey(true);
         EndAddingDish:
             Console.WriteLine();
-        }
+        } //добавление нового блюда в меню
         static public void AddTypeFood()
         {
             Console.Clear();
@@ -567,7 +567,7 @@ namespace ProjectRestaurantLibrary
         endAddTypeFood:
             Console.WriteLine();
 
-        }
+        } //добавление нового типа блюд в меню
         static public void RemoveTypeFood()
         {
             Console.Clear();
@@ -621,7 +621,7 @@ namespace ProjectRestaurantLibrary
 
             Console.WriteLine("Для перехода в меню нажмите любую клавишу...");
             Console.ReadKey(true);
-        }
+        } // удаление типа блюад
         static public void RemoveFood()
         {
             while (true)
@@ -674,7 +674,7 @@ namespace ProjectRestaurantLibrary
                     Console.ReadKey(true);
                 }
             }
-        }
+        } // удаление имеющегося блюда из меню
         static public void SearchFood()
         {
             Console.Clear();
@@ -703,7 +703,7 @@ namespace ProjectRestaurantLibrary
             Console.ReadKey(true);
         endSearchFood:
             Console.WriteLine();
-        }
+        } // поиск блюда по названию 
         static public void Inflation() 
         {
             var changedFoodMenu = foodMenu.Select(x => x.Value.Price * 100);
@@ -739,7 +739,7 @@ namespace ProjectRestaurantLibrary
             Thread.Sleep(2000);
             Console.WriteLine("Шутка! :)");
             Console.ReadKey(true);
-        }
+        } // программа инфляция. Необходима чтобы проект соответствовал ДЗ
         static public void ChangeFood()
         {
             while (true)
@@ -826,7 +826,7 @@ namespace ProjectRestaurantLibrary
             }
         EndChangeDish:
             Console.WriteLine();
-        }
+        } // Изменение имеющегося блюда в меню
         static public void PrintList()
         {
             while(true)
@@ -863,8 +863,8 @@ namespace ProjectRestaurantLibrary
                 }
 
             }
-        }
-        static public void FilterMenu(Dictionary<int, Dish> printedFoodMenu) 
+        } // Вывод списка блюд или типов блюд
+        static public void SortingMenu(Dictionary<int, Dish> printedFoodMenu) 
         {
             Dictionary<int, Dish> printedFoodMenuClone = new Dictionary<int, Dish>();
 
@@ -876,7 +876,7 @@ namespace ProjectRestaurantLibrary
                 printedFoodMenuClone.Add(temp.Key, temp.Value);
             }
             PrintFoodMenu(printedFoodMenuClone);
-        }
+        }  //сортировка по цене в меню пользователя
         static public string EnterString()
         {
             string enteredString = "";
@@ -913,7 +913,7 @@ namespace ProjectRestaurantLibrary
             }
             Console.WriteLine();
             return enteredString;
-        }
+        } // функция ввода строки
         public static void Run()
         {
             InitializationFoodMenu();
@@ -947,7 +947,7 @@ namespace ProjectRestaurantLibrary
             Console.Clear();
             Console.WriteLine("Удачи!");
 
-        }
+        } // Запуск программы
         static public void AdminMenu()
         {
             Console.Clear();
@@ -1007,6 +1007,6 @@ namespace ProjectRestaurantLibrary
         endAdminMenu:
             Console.WriteLine();
             
-        }
+        } // меню администратора и взаимодействие с ним
     }
 }
