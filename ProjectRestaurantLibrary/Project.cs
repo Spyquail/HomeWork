@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Threading;
-// проверка на введение |
+
 namespace ProjectRestaurantLibrary
 {
     public class Project
