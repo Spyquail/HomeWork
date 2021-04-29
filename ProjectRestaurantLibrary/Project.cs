@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-
+// проверка на введение |
 namespace ProjectRestaurantLibrary
 {
     public class Project
@@ -249,7 +249,7 @@ namespace ProjectRestaurantLibrary
                 Console.Clear();
                 if (int.TryParse(enteredString, out stringToInt))
                 {
-                    if ((i - stringToInt) >= 0)
+                    if ((i - stringToInt) > 0)
                     {
                         enteredTypeFood = TypesFood[stringToInt - 1];
                         var searchedFoodMenu = from query in foodMenu
@@ -531,7 +531,7 @@ namespace ProjectRestaurantLibrary
             string enteredDescription = EnterString();
             foodMenu.Add((foodMenu.Count + 1), new Dish(enteredNameFood, enteredTypeFood, enteredPriceFood, enteredTimeCooking, enteredDescription));
             Console.WriteLine("Блюдо добавлено! Для перехода в меню нажмите любую клавишу...");
-            Project.SaveInTxtFoodMenu();
+            SaveInTxtFoodMenu();
             Console.ReadKey(true);
         EndAddingDish:
             Console.WriteLine();
@@ -546,6 +546,7 @@ namespace ProjectRestaurantLibrary
                 goto endAddTypeFood;
             TypesFood.Add(enteredString);
             Console.WriteLine("Тип блюда добавлен! Нажмите любую клавишу для возврата... ");
+            SaveInTxtTypesFood();
             Console.ReadKey(true);
         endAddTypeFood:
             Console.WriteLine();
@@ -701,9 +702,14 @@ namespace ProjectRestaurantLibrary
             }
             Console.Clear();
             Console.WriteLine("Всё подорожало в 100 раз!!!");
-            Console.WriteLine("Самое дорогое блюдо стоит: " + changedFoodMenu.Max() / 100); //???
-            Console.WriteLine("Самое дешёвое блюдо стоит: " + changedFoodMenu.Min() / 100);
-            Console.WriteLine("Цена за все единицы блюд: " + changedFoodMenu.Aggregate((a, b) => a + b));
+            if (changedFoodMenu.Count() != 0)
+            {
+                Console.WriteLine("Самое дорогое блюдо стоит: " + changedFoodMenu.Max() / 100); //???
+                Console.WriteLine("Самое дешёвое блюдо стоит: " + changedFoodMenu.Min() / 100);
+                Console.WriteLine("Цена за все единицы блюд: " + changedFoodMenu.Aggregate((a, b) => a + b));
+            }
+            else
+                Console.WriteLine("А блюд нет!(");
             Console.ReadKey(true);
         }
         static public void ChangeFood()
