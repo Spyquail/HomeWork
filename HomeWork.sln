@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork4.4", "HomeWork4\Ho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeWork4.5", "HomeWork4\HomeWork4.5\HomeWork4.5.csproj", "{A5AF7134-5A2F-4243-905C-CDA55928D21B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurantLibrary", "ProjectRestaurantLibrary\ProjectRestaurantLibrary.csproj", "{ACC1BB1D-3207-4B7C-BEAE-F1875E5DBE3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectRestaurantLibrary", "ProjectRestaurantLibrary\ProjectRestaurantLibrary.csproj", "{ACC1BB1D-3207-4B7C-BEAE-F1875E5DBE3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectResraurantWinForm", "ProjectResraurantWinForm\ProjectResraurantWinForm.csproj", "{CBD7B4CF-9A29-4392-B511-85C569F39B7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{ACC1BB1D-3207-4B7C-BEAE-F1875E5DBE3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACC1BB1D-3207-4B7C-BEAE-F1875E5DBE3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACC1BB1D-3207-4B7C-BEAE-F1875E5DBE3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD7B4CF-9A29-4392-B511-85C569F39B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD7B4CF-9A29-4392-B511-85C569F39B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD7B4CF-9A29-4392-B511-85C569F39B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD7B4CF-9A29-4392-B511-85C569F39B7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

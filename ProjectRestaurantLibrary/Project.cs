@@ -109,8 +109,7 @@ namespace ProjectRestaurantLibrary
                 TypesFood.Add("Горячее блюдо");
                 TypesFood.Add("Десерт");
                 SaveInTxtTypesFood();
-            }
-                
+            }      
         }
         static public void SaveInTxtFoodMenu()
         {
