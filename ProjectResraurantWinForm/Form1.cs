@@ -16,104 +16,94 @@ namespace ProjectResraurantWinForm
         public Form1()
         {
             InitializeComponent();
-            InitializeTypesMenu();
-            DishListBoxUpdate();
-            DishListBox.SelectedIndexChanged += DishListBox_IndexClick;
+            Initialization();
+            foreach (var temp in DishPresenter.GetListType())
+                temp.SelectedIndexChanged += DishListBox_IndexClick;
+            toolStripMenuItemAuthorization.Click += FormAuthorization;
+            //toolStripMenuItemAddDish.Click +=;
+            toolStripMenuItemAddType.Click += FormAddType;
+            //toolStripMenuItemEditDish.Click +=;
+            //toolStripMenuItemRemoveDish.Click +=;
+            //toolStripMenuItemRemoveType.Click +=;
+            toolStripMenuItemExit.Click += Exit;
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void FormAuthorization(object sender, EventArgs e)
         {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DishListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void DishListBoxUpdate()
-        {
-            DishListBox.Items.Clear();
-            foreach (var dish in Dish.dishes)
-                DishListBox.Items.Add(dish.DishName);
-        }
-        private void InitializeTypesMenu()
-        {
-            string nameTxtTypesFood = "AllTypeDishes.txt";
-            if (File.Exists(nameTxtTypesFood))
+            
+            if (!Application.OpenForms.OfType<Form2>().Any())
             {
-                using (StreamReader sr = new StreamReader(nameTxtTypesFood))
-                {
-                    while (true)
-                    {
-                        string readedType = sr.ReadLine();
-                        if (readedType == null)
-                            break;
-                        Dish.AllTypeDishes.Add(readedType);
-                    }
-                }
+                Form2 formAuth = new Form2();
+                formAuth.Show();
+                //formAuth.BringToFront;
             }
             else
             {
-                Dish.AllTypeDishes.Add("Салат");
-                Dish.AllTypeDishes.Add("Суп");
-                Dish.AllTypeDishes.Add("Паста");
-                Dish.AllTypeDishes.Add("Горячее блюдо");
-                Dish.AllTypeDishes.Add("Десерт");
-                Dish.SaveInTxtTypesFood();
+                Form2 formAuth = (Form2)Application.OpenForms["Form2"];
+                formAuth.BringToFront();
             }
-            for(int i = 0; i < Dish.AllTypeDishes.Count; i++)
+            
+            
+        }
+        private void FormAddType(object sender, EventArgs e)
+        {
+            if (!Application.OpenForms.OfType<FormAddType>().Any())
             {
-                TabPage myTabPage = new TabPage(Dish.AllTypeDishes[i]);
-                tabControl2.TabPages.Add(myTabPage);
-                tabControl2.TabPages[i + 1].UseVisualStyleBackColor = true;
-                Dish.list.Add(new ListBox());
-                Dish.list[i].Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                var searchedFoodMenu = from query in Dish.dishes
-                                       where query.TypeOfDish.Contains(Dish.AllTypeDishes[i])
-                                       select query;
-                List<Dish> printedFoodMenuClone = new List<Dish>();
-                foreach (var temp in searchedFoodMenu)
-                {
-                    printedFoodMenuClone.Add(temp);
-                }
-                Dish.list[i].Size = new Size(DishListBox.Size.Width - 200, DishListBox.Size.Height - 260);
-                Dish.list[i].Location = new Point(3, 4);
-                tabControl2.TabPages[i + 1].Controls.Add(Dish.list[i]);
-                Dish.list[i].Items.Clear();
-                foreach (var dish in printedFoodMenuClone)
-                    Dish.list[i].Items.Add(dish.DishName);
+                FormAddType formAddType = new FormAddType();
+                formAddType.Show();
+            }
+            else
+            {
+                FormAddType formAddType = (FormAddType)Application.OpenForms["FormAddType"];
+                formAddType.BringToFront();
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        public void Initialization()
         {
-
+            DishPresenter.Initialize(tabControlTypesMenu);
+        }
+        public void AuthorizationSuccessful()
+        {
+            toolStripMenuItemAuthorization.Visible = false;
+            toolStripMenuItemAddDish.Visible = true;
+            toolStripMenuItemAddType.Visible = true;
+            toolStripMenuItemEditDish.Visible = true;
+            toolStripMenuItemRemoveDish.Visible = true;
+            toolStripMenuItemRemoveType.Visible = true;
+            toolStripMenuItemExit.Visible = true;
+            labelAuth.Visible = true;
         }
 
-        private void NameDishTextBox_TextChanged(object sender, EventArgs e)
+        public void Exit(object sender, EventArgs e)
         {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            
+            
+            toolStripMenuItemAuthorization.Visible = true;
+            toolStripMenuItemAddDish.Visible = false;
+            toolStripMenuItemAddType.Visible = false;
+            toolStripMenuItemEditDish.Visible = false;
+            toolStripMenuItemRemoveDish.Visible = false;
+            toolStripMenuItemRemoveType.Visible = false;
+            toolStripMenuItemExit.Visible = false;
+            labelAuth.Visible = false;
+            Form2 form2 = (Form2)Application.OpenForms["Form2"];
+            if (Application.OpenForms.OfType<Form2>().Any())
+            {
+                form2.Close();
+            }
+            FormAddType formAddType = (FormAddType)Application.OpenForms["FormAddType"];
+            if (Application.OpenForms.OfType<FormAddType>().Any())
+            {
+                formAddType.Close();
+            }
+            
         }
 
         private void DishListBox_IndexClick(object sender, EventArgs e)
         {
-            int index = DishListBox.SelectedIndex;
-            NameDishTextBox.Text = DishListBox.Items[index].ToString();
+            var enteredListBox = (ListBox)sender;
+            if(enteredListBox.SelectedIndex >= 0)
+                DishPresenter.UpdateInformation(enteredListBox, NameDishTextBox, pictureBoxDish, textBoxTimeCooking, textBoxTypeDish, PriceDishTextBox,textBoxDescription);
         }
     }
 }
