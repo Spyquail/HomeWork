@@ -22,6 +22,7 @@ namespace ProjectResraurantWinForm
         private void buttonAutharization_Click(object sender, EventArgs e)
         {
             DishPresenter.Autharization(textBoxLogin, textBoxPassword );
+            
         }
 
         private void Form2_KeyDown(object sender, KeyEventArgs e)
