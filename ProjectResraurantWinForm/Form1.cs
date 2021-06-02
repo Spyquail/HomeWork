@@ -20,13 +20,11 @@ namespace ProjectResraurantWinForm
             Initialization();
 
             toolStripMenuItemAuthorization.Click += FormAuthorization;
-            //toolStripMenuItemAddDish.Click +=;
+            toolStripMenuItemAddDish.Click += FormAddDish;
             toolStripMenuItemAddType.Click += FormAddType;
-            //toolStripMenuItemEditDish.Click +=;
-            //toolStripMenuItemRemoveDish.Click +=;
-            //toolStripMenuItemRemoveType.Click +=;
+            toolStripMenuItemRemoveType.Click += FormRemoveType;
             toolStripMenuItemExit.Click += Exit;
-            comboBoxTypeDishEdit.SelectedIndexChanged += comboBoxTypeDishEdit_SelectionChangeCommitted;
+
         }
 
         private void FormAuthorization(object sender, EventArgs e)
@@ -42,15 +40,13 @@ namespace ProjectResraurantWinForm
                 Form2 formAuth = (Form2)Application.OpenForms["Form2"];
                 formAuth.BringToFront();
             }
-
-
         }
         private void FormAddType(object sender, EventArgs e)
         {
             if (!Application.OpenForms.OfType<FormAddType>().Any())
             {
                 FormAddType formAddType = new FormAddType();
-                formAddType.Show();
+                formAddType.ShowDialog();
             }
             else
             {
@@ -58,11 +54,40 @@ namespace ProjectResraurantWinForm
                 formAddType.BringToFront();
             }
         }
+        private void FormRemoveType(object sender, EventArgs e)
+        {
+            if (!Application.OpenForms.OfType<FormRemoveType>().Any())
+            {
+                FormRemoveType formRemoveType = new FormRemoveType();
+                formRemoveType.ShowDialog();
+            }
+            else
+            {
+                FormRemoveType formRemoveType = (FormRemoveType)Application.OpenForms["FormRemoveType"];
+                formRemoveType.BringToFront();
+            }
+
+        }
+        private void FormAddDish(object sender, EventArgs e)
+        {
+
+            if (!Application.OpenForms.OfType<FormAddDish>().Any())
+            {
+                FormAddDish formAddDish = new FormAddDish();
+                formAddDish.ShowDialog();
+            }
+            else
+            {
+                FormAddDish formAddDish = (FormAddDish)Application.OpenForms["FormAddDish"];
+                formAddDish.BringToFront();
+            }
+        }
         public void Initialization()
         {
             DishPresenter.Initialize(tabControlTypesMenu);
             foreach (var temp in DishPresenter.GetListType())
                 temp.SelectedIndexChanged += DishListBox_IndexClick;
+
         }
         public void AuthorizationSuccessful()
         {
@@ -73,8 +98,6 @@ namespace ProjectResraurantWinForm
             toolStripMenuItemAuthorization.Visible = false;
             toolStripMenuItemAddDish.Visible = true;
             toolStripMenuItemAddType.Visible = true;
-            toolStripMenuItemEditDish.Visible = true;
-            toolStripMenuItemRemoveDish.Visible = true;
             toolStripMenuItemRemoveType.Visible = true;
             toolStripMenuItemExit.Visible = true;
             labelAuth.Visible = true;
@@ -91,8 +114,6 @@ namespace ProjectResraurantWinForm
             toolStripMenuItemAuthorization.Visible = true;
             toolStripMenuItemAddDish.Visible = false;
             toolStripMenuItemAddType.Visible = false;
-            toolStripMenuItemEditDish.Visible = false;
-            toolStripMenuItemRemoveDish.Visible = false;
             toolStripMenuItemRemoveType.Visible = false;
             toolStripMenuItemExit.Visible = false;
             labelAuth.Visible = false;
@@ -141,6 +162,7 @@ namespace ProjectResraurantWinForm
 
 
         }
+        
         public void HideAll()
         {
             AddFoodInCartbutton.Visible = false;
@@ -159,8 +181,13 @@ namespace ProjectResraurantWinForm
             labelPriceDishUser.Visible = false; 
             labelTypeDishUser.Visible = false; 
             labelTimeCookUser.Visible = false; 
-            textBoxDescriptionUser.Visible = false; 
-    }
+            textBoxDescriptionUser.Visible = false;
+            buttonAddMinusDish.Visible = false;
+            buttonAddPlusDish.Visible = false;
+            textBoxNumberOfDish.Visible = false;
+            labelNumberOfDish.Visible = false;
+            buttonRemoveDish.Visible = false;
+        }
         public void ShowBoxUserShop()
         {
             pictureBoxDish.Visible = true;
@@ -175,11 +202,15 @@ namespace ProjectResraurantWinForm
         {
             pictureBoxDish.Visible = true;
             labelNameDishUser.Visible = true;
-            AddFoodInCartbutton.Visible = true;
+            //AddFoodInCartbutton.Visible = true;
             labelPriceDishUser.Visible = true;
             labelTypeDishUser.Visible = true;
             labelTimeCookUser.Visible = true;
             textBoxDescriptionUser.Visible = true;
+            buttonAddMinusDish.Visible = true;
+            buttonAddPlusDish.Visible = true;
+            textBoxNumberOfDish.Visible = true;
+            labelNumberOfDish.Visible = true;
         }
         public void ShowBoxAdminShop()
         {
@@ -195,6 +226,7 @@ namespace ProjectResraurantWinForm
             TextBoxNameDishEdit.Visible = true;
             maskedTextBoxTimeCookEdit.Visible = true;
             buttonSaveDescription.Visible = true;
+            buttonRemoveDish.Visible = true;
         }
 
         private void ShoppingCartListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -228,10 +260,30 @@ namespace ProjectResraurantWinForm
                 DishPresenter.EditPriceDish(selectedDish.Id, int.Parse(maskedTextBoxPriceDishEdit.Text));
         }
 
-        private void comboBoxTypeDishEdit_SelectionChangeCommitted(object sender, EventArgs e)//Не правильно работает
+        private void comboBoxTypeDishEdit_SelectionChangeCommitted(object sender, EventArgs e)
         {
             int indexType = comboBoxTypeDishEdit.SelectedIndex;
             DishPresenter.EditTypeDish(selectedDish.Id, indexType);
+        }
+
+        private void buttonRemoveDish_Click(object sender, EventArgs e)
+        {
+            DishPresenter.RemoveDish(selectedDish.Id);
+        }
+
+        private void buttonAddMinusDish_Click(object sender, EventArgs e)
+        {
+            DishPresenter.RemoveFromCart(selectedDish.Id, ShoppingCartListBox);   
+        }
+
+        private void buttonAddPlusDish_Click(object sender, EventArgs e)
+        {
+            DishPresenter.AddInCart(selectedDish.Id, ShoppingCartListBox);
+        }
+
+        private void dataGridViewShopingCart_SelectionChanged(object sender, EventArgs e)
+        {
+            //DishListBox_IndexClick(sender, e);
         }
     }
 }

@@ -34,13 +34,12 @@ namespace ProjectResraurantWinForm
             this.textBoxTimeCookingEdit = new System.Windows.Forms.TextBox();
             this.tabControlTypesMenu = new System.Windows.Forms.TabControl();
             this.ShoppingCart = new System.Windows.Forms.TabPage();
+            this.dataGridViewShopingCart = new System.Windows.Forms.DataGridView();
             this.ShoppingCartListBox = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAuthorization = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAddDish = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemRemoveDish = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemEditDish = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAddType = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRemoveType = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,9 +61,15 @@ namespace ProjectResraurantWinForm
             this.maskedTextBoxPriceDishEdit = new System.Windows.Forms.MaskedTextBox();
             this.maskedTextBoxTimeCookEdit = new System.Windows.Forms.MaskedTextBox();
             this.comboBoxTypeDishEdit = new System.Windows.Forms.ComboBox();
+            this.buttonAddMinusDish = new System.Windows.Forms.Button();
+            this.buttonAddPlusDish = new System.Windows.Forms.Button();
+            this.textBoxNumberOfDish = new System.Windows.Forms.TextBox();
+            this.labelNumberOfDish = new System.Windows.Forms.Label();
+            this.buttonRemoveDish = new System.Windows.Forms.Button();
             this.tabControlMainMenu.SuspendLayout();
             this.Menu.SuspendLayout();
             this.ShoppingCart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShopingCart)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDish)).BeginInit();
             this.SuspendLayout();
@@ -79,7 +84,7 @@ namespace ProjectResraurantWinForm
             this.tabControlMainMenu.Location = new System.Drawing.Point(-1, 26);
             this.tabControlMainMenu.Name = "tabControlMainMenu";
             this.tabControlMainMenu.SelectedIndex = 0;
-            this.tabControlMainMenu.Size = new System.Drawing.Size(400, 470);
+            this.tabControlMainMenu.Size = new System.Drawing.Size(398, 470);
             this.tabControlMainMenu.TabIndex = 1;
             this.tabControlMainMenu.SelectedIndexChanged += new System.EventHandler(this.tabControlMainMenu_SelectedIndexChanged);
             // 
@@ -91,14 +96,14 @@ namespace ProjectResraurantWinForm
             this.Menu.Location = new System.Drawing.Point(4, 24);
             this.Menu.Name = "Menu";
             this.Menu.Padding = new System.Windows.Forms.Padding(3);
-            this.Menu.Size = new System.Drawing.Size(392, 442);
+            this.Menu.Size = new System.Drawing.Size(390, 442);
             this.Menu.TabIndex = 0;
             this.Menu.Text = "Меню";
             // 
             // textBoxTimeCookingEdit
             // 
             this.textBoxTimeCookingEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTimeCookingEdit.Location = new System.Drawing.Point(478, 264);
+            this.textBoxTimeCookingEdit.Location = new System.Drawing.Point(476, 264);
             this.textBoxTimeCookingEdit.Multiline = true;
             this.textBoxTimeCookingEdit.Name = "textBoxTimeCookingEdit";
             this.textBoxTimeCookingEdit.ReadOnly = true;
@@ -112,19 +117,39 @@ namespace ProjectResraurantWinForm
             this.tabControlTypesMenu.Location = new System.Drawing.Point(3, 3);
             this.tabControlTypesMenu.Name = "tabControlTypesMenu";
             this.tabControlTypesMenu.SelectedIndex = 0;
-            this.tabControlTypesMenu.Size = new System.Drawing.Size(386, 436);
+            this.tabControlTypesMenu.Size = new System.Drawing.Size(384, 436);
             this.tabControlTypesMenu.TabIndex = 1;
             // 
             // ShoppingCart
             // 
             this.ShoppingCart.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ShoppingCart.Controls.Add(this.dataGridViewShopingCart);
             this.ShoppingCart.Controls.Add(this.ShoppingCartListBox);
             this.ShoppingCart.Location = new System.Drawing.Point(4, 24);
             this.ShoppingCart.Name = "ShoppingCart";
             this.ShoppingCart.Padding = new System.Windows.Forms.Padding(3);
-            this.ShoppingCart.Size = new System.Drawing.Size(392, 442);
+            this.ShoppingCart.Size = new System.Drawing.Size(390, 442);
             this.ShoppingCart.TabIndex = 1;
             this.ShoppingCart.Text = "Корзина";
+            // 
+            // dataGridViewShopingCart
+            // 
+            this.dataGridViewShopingCart.AllowUserToAddRows = false;
+            this.dataGridViewShopingCart.AllowUserToDeleteRows = false;
+            this.dataGridViewShopingCart.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewShopingCart.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewShopingCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewShopingCart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewShopingCart.Location = new System.Drawing.Point(3, 3);
+            this.dataGridViewShopingCart.MultiSelect = false;
+            this.dataGridViewShopingCart.Name = "dataGridViewShopingCart";
+            this.dataGridViewShopingCart.ReadOnly = true;
+            this.dataGridViewShopingCart.RowHeadersVisible = false;
+            this.dataGridViewShopingCart.RowTemplate.Height = 25;
+            this.dataGridViewShopingCart.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewShopingCart.Size = new System.Drawing.Size(384, 436);
+            this.dataGridViewShopingCart.TabIndex = 1;
+            this.dataGridViewShopingCart.SelectionChanged += new System.EventHandler(this.dataGridViewShopingCart_SelectionChanged);
             // 
             // ShoppingCartListBox
             // 
@@ -133,19 +158,21 @@ namespace ProjectResraurantWinForm
             this.ShoppingCartListBox.FormattingEnabled = true;
             this.ShoppingCartListBox.ItemHeight = 15;
             this.ShoppingCartListBox.Location = new System.Drawing.Point(3, 3);
+            this.ShoppingCartListBox.MultiColumn = true;
             this.ShoppingCartListBox.Name = "ShoppingCartListBox";
-            this.ShoppingCartListBox.Size = new System.Drawing.Size(386, 436);
+            this.ShoppingCartListBox.Size = new System.Drawing.Size(384, 436);
             this.ShoppingCartListBox.TabIndex = 0;
             this.ShoppingCartListBox.SelectedIndexChanged += new System.EventHandler(this.ShoppingCartListBox_SelectedIndexChanged);
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlDark;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(813, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(811, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -154,8 +181,6 @@ namespace ProjectResraurantWinForm
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAuthorization,
             this.toolStripMenuItemAddDish,
-            this.toolStripMenuItemRemoveDish,
-            this.toolStripMenuItemEditDish,
             this.toolStripMenuItemAddType,
             this.toolStripMenuItemRemoveType,
             this.toolStripMenuItemExit});
@@ -166,48 +191,34 @@ namespace ProjectResraurantWinForm
             // toolStripMenuItemAuthorization
             // 
             this.toolStripMenuItemAuthorization.Name = "toolStripMenuItemAuthorization";
-            this.toolStripMenuItemAuthorization.Size = new System.Drawing.Size(202, 22);
+            this.toolStripMenuItemAuthorization.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItemAuthorization.Text = "Авторизация";
             // 
             // toolStripMenuItemAddDish
             // 
             this.toolStripMenuItemAddDish.Name = "toolStripMenuItemAddDish";
-            this.toolStripMenuItemAddDish.Size = new System.Drawing.Size(202, 22);
+            this.toolStripMenuItemAddDish.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItemAddDish.Text = "Добавить блюдо";
             this.toolStripMenuItemAddDish.Visible = false;
-            // 
-            // toolStripMenuItemRemoveDish
-            // 
-            this.toolStripMenuItemRemoveDish.Name = "toolStripMenuItemRemoveDish";
-            this.toolStripMenuItemRemoveDish.Size = new System.Drawing.Size(202, 22);
-            this.toolStripMenuItemRemoveDish.Text = "Удалить блюдо";
-            this.toolStripMenuItemRemoveDish.Visible = false;
-            // 
-            // toolStripMenuItemEditDish
-            // 
-            this.toolStripMenuItemEditDish.Name = "toolStripMenuItemEditDish";
-            this.toolStripMenuItemEditDish.Size = new System.Drawing.Size(202, 22);
-            this.toolStripMenuItemEditDish.Text = "Редактирование блюда";
-            this.toolStripMenuItemEditDish.Visible = false;
             // 
             // toolStripMenuItemAddType
             // 
             this.toolStripMenuItemAddType.Name = "toolStripMenuItemAddType";
-            this.toolStripMenuItemAddType.Size = new System.Drawing.Size(202, 22);
+            this.toolStripMenuItemAddType.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItemAddType.Text = "Добавить тип блюда";
             this.toolStripMenuItemAddType.Visible = false;
             // 
             // toolStripMenuItemRemoveType
             // 
             this.toolStripMenuItemRemoveType.Name = "toolStripMenuItemRemoveType";
-            this.toolStripMenuItemRemoveType.Size = new System.Drawing.Size(202, 22);
+            this.toolStripMenuItemRemoveType.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItemRemoveType.Text = "Удалить тип блюда";
             this.toolStripMenuItemRemoveType.Visible = false;
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(202, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItemExit.Text = "Выйти";
             this.toolStripMenuItemExit.Visible = false;
             // 
@@ -256,7 +267,7 @@ namespace ProjectResraurantWinForm
             // pictureBoxDish
             // 
             this.pictureBoxDish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxDish.Location = new System.Drawing.Point(455, 116);
+            this.pictureBoxDish.Location = new System.Drawing.Point(453, 116);
             this.pictureBoxDish.Name = "pictureBoxDish";
             this.pictureBoxDish.Size = new System.Drawing.Size(305, 128);
             this.pictureBoxDish.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -267,7 +278,7 @@ namespace ProjectResraurantWinForm
             // 
             this.LabelNameFoodEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelNameFoodEdit.AutoSize = true;
-            this.LabelNameFoodEdit.Location = new System.Drawing.Point(548, 50);
+            this.LabelNameFoodEdit.Location = new System.Drawing.Point(557, 50);
             this.LabelNameFoodEdit.Name = "LabelNameFoodEdit";
             this.LabelNameFoodEdit.Size = new System.Drawing.Size(101, 15);
             this.LabelNameFoodEdit.TabIndex = 19;
@@ -278,7 +289,7 @@ namespace ProjectResraurantWinForm
             // 
             this.LabelPriceDishEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelPriceDishEdit.AutoSize = true;
-            this.LabelPriceDishEdit.Location = new System.Drawing.Point(482, 254);
+            this.LabelPriceDishEdit.Location = new System.Drawing.Point(480, 254);
             this.LabelPriceDishEdit.Name = "LabelPriceDishEdit";
             this.LabelPriceDishEdit.Size = new System.Drawing.Size(38, 15);
             this.LabelPriceDishEdit.TabIndex = 18;
@@ -289,7 +300,7 @@ namespace ProjectResraurantWinForm
             // 
             this.textBoxDescriptionEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescriptionEdit.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxDescriptionEdit.Location = new System.Drawing.Point(433, 338);
+            this.textBoxDescriptionEdit.Location = new System.Drawing.Point(431, 338);
             this.textBoxDescriptionEdit.Multiline = true;
             this.textBoxDescriptionEdit.Name = "textBoxDescriptionEdit";
             this.textBoxDescriptionEdit.Size = new System.Drawing.Size(365, 123);
@@ -406,11 +417,70 @@ namespace ProjectResraurantWinForm
             this.comboBoxTypeDishEdit.Visible = false;
             this.comboBoxTypeDishEdit.SelectionChangeCommitted += new System.EventHandler(this.comboBoxTypeDishEdit_SelectionChangeCommitted);
             // 
+            // buttonAddMinusDish
+            // 
+            this.buttonAddMinusDish.Location = new System.Drawing.Point(703, 280);
+            this.buttonAddMinusDish.Name = "buttonAddMinusDish";
+            this.buttonAddMinusDish.Size = new System.Drawing.Size(27, 26);
+            this.buttonAddMinusDish.TabIndex = 34;
+            this.buttonAddMinusDish.Text = "-";
+            this.buttonAddMinusDish.UseVisualStyleBackColor = true;
+            this.buttonAddMinusDish.Visible = false;
+            this.buttonAddMinusDish.Click += new System.EventHandler(this.buttonAddMinusDish_Click);
+            // 
+            // buttonAddPlusDish
+            // 
+            this.buttonAddPlusDish.Location = new System.Drawing.Point(771, 280);
+            this.buttonAddPlusDish.Name = "buttonAddPlusDish";
+            this.buttonAddPlusDish.Size = new System.Drawing.Size(27, 26);
+            this.buttonAddPlusDish.TabIndex = 35;
+            this.buttonAddPlusDish.Text = "+";
+            this.buttonAddPlusDish.UseVisualStyleBackColor = true;
+            this.buttonAddPlusDish.Visible = false;
+            this.buttonAddPlusDish.Click += new System.EventHandler(this.buttonAddPlusDish_Click);
+            // 
+            // textBoxNumberOfDish
+            // 
+            this.textBoxNumberOfDish.Location = new System.Drawing.Point(737, 281);
+            this.textBoxNumberOfDish.Name = "textBoxNumberOfDish";
+            this.textBoxNumberOfDish.ReadOnly = true;
+            this.textBoxNumberOfDish.Size = new System.Drawing.Size(28, 23);
+            this.textBoxNumberOfDish.TabIndex = 36;
+            this.textBoxNumberOfDish.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxNumberOfDish.Visible = false;
+            // 
+            // labelNumberOfDish
+            // 
+            this.labelNumberOfDish.AutoSize = true;
+            this.labelNumberOfDish.Location = new System.Drawing.Point(712, 262);
+            this.labelNumberOfDish.Name = "labelNumberOfDish";
+            this.labelNumberOfDish.Size = new System.Drawing.Size(75, 15);
+            this.labelNumberOfDish.TabIndex = 37;
+            this.labelNumberOfDish.Text = "Количество:";
+            this.labelNumberOfDish.Visible = false;
+            // 
+            // buttonRemoveDish
+            // 
+            this.buttonRemoveDish.Location = new System.Drawing.Point(455, 28);
+            this.buttonRemoveDish.Name = "buttonRemoveDish";
+            this.buttonRemoveDish.Size = new System.Drawing.Size(305, 23);
+            this.buttonRemoveDish.TabIndex = 38;
+            this.buttonRemoveDish.Text = "УДАЛИТЬ БЛЮДО";
+            this.buttonRemoveDish.UseVisualStyleBackColor = true;
+            this.buttonRemoveDish.Visible = false;
+            this.buttonRemoveDish.Click += new System.EventHandler(this.buttonRemoveDish_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 495);
+            this.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.ClientSize = new System.Drawing.Size(811, 495);
+            this.Controls.Add(this.buttonRemoveDish);
+            this.Controls.Add(this.labelNumberOfDish);
+            this.Controls.Add(this.textBoxNumberOfDish);
+            this.Controls.Add(this.buttonAddPlusDish);
+            this.Controls.Add(this.buttonAddMinusDish);
             this.Controls.Add(this.comboBoxTypeDishEdit);
             this.Controls.Add(this.maskedTextBoxTimeCookEdit);
             this.Controls.Add(this.maskedTextBoxPriceDishEdit);
@@ -440,6 +510,7 @@ namespace ProjectResraurantWinForm
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
             this.ShoppingCart.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShopingCart)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDish)).EndInit();
@@ -457,8 +528,6 @@ namespace ProjectResraurantWinForm
         private System.Windows.Forms.TabControl tabControlTypesMenu;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAuthorization;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAddDish;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemoveDish;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditDish;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAddType;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemoveType;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
@@ -482,6 +551,12 @@ namespace ProjectResraurantWinForm
         public System.Windows.Forms.MaskedTextBox maskedTextBoxPriceDishEdit;
         public System.Windows.Forms.MaskedTextBox maskedTextBoxTimeCookEdit;
         public System.Windows.Forms.ComboBox comboBoxTypeDishEdit;
+        private System.Windows.Forms.Button buttonAddMinusDish;
+        private System.Windows.Forms.Button buttonAddPlusDish;
+        public System.Windows.Forms.TextBox textBoxNumberOfDish;
+        private System.Windows.Forms.Label labelNumberOfDish;
+        private System.Windows.Forms.Button buttonRemoveDish;
+        public System.Windows.Forms.DataGridView dataGridViewShopingCart;
     }
 }
 
