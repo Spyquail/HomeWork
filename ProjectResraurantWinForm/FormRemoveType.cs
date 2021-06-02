@@ -23,9 +23,7 @@ namespace ProjectResraurantWinForm
         {
             listBoxTypes.Items.Clear();
             foreach (var type in DishPresenter.GetAllType())
-            {
                 listBoxTypes.Items.Add(type);
-            }
         }
         private void listBoxTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -34,14 +32,12 @@ namespace ProjectResraurantWinForm
             if(enteredListBox.SelectedIndex != -1)
                 removedType = enteredListBox.SelectedItem.ToString();
         }
-
         private void buttonRemoveType_Click(object sender, EventArgs e)
         {
             DishPresenter.RemoveType(removedType);
             listBoxTypes.ClearSelected();
             buttonRemoveType.Visible = false;
             Initialize();
-
         }
     }
 }

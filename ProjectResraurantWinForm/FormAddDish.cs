@@ -18,7 +18,6 @@ namespace ProjectResraurantWinForm
         {
             InitializeComponent();
             comboBoxTypeDish.DataSource = DishPresenter.GetAllType();
-            
             while(true)
             {
                 if (DishPresenter.GetDishes().Exists(x => x.Id == id))
@@ -27,8 +26,6 @@ namespace ProjectResraurantWinForm
                     break;
             }
         }
-
-        
         private void buttonSelectPicture_Click(object sender, EventArgs e)
         {
             OpenFileDialog OPF = new();
@@ -46,7 +43,6 @@ namespace ProjectResraurantWinForm
                 }
             }
         }
-
         private void buttonAddDish_Click(object sender, EventArgs e)
         {
             if (textBoxDescription.Text != "" && textBoxNameDish.Text != "" && maskedTextBoxPrice.Text != "" && maskedTextBoxTimeCooking.Text != "")
@@ -56,6 +52,10 @@ namespace ProjectResraurantWinForm
             }
             else
                 MessageBox.Show("Все поля являются обязательным для заполнения, кроме картинки", "Error");
+        }
+        private void maskedTextBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            ((MaskedTextBox)sender).SelectionStart = ((MaskedTextBox)sender).Text.Length;
         }
     }
 }

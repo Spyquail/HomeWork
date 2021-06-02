@@ -17,7 +17,6 @@ namespace ProjectResraurantWinForm
             InitializeComponent();
             textBoxAddType.KeyDown += FormAddType_KeyDown;
         }
-
         private void buttonAddType_Click(object sender, EventArgs e)
         {
             DishPresenter.AddType(textBoxAddType.Text);

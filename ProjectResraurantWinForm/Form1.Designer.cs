@@ -66,6 +66,8 @@ namespace ProjectResraurantWinForm
             this.textBoxNumberOfDish = new System.Windows.Forms.TextBox();
             this.labelNumberOfDish = new System.Windows.Forms.Label();
             this.buttonRemoveDish = new System.Windows.Forms.Button();
+            this.labelFullPrice = new System.Windows.Forms.Label();
+            this.labelFullTimeCooking = new System.Windows.Forms.Label();
             this.tabControlMainMenu.SuspendLayout();
             this.Menu.SuspendLayout();
             this.ShoppingCart.SuspendLayout();
@@ -76,9 +78,6 @@ namespace ProjectResraurantWinForm
             // 
             // tabControlMainMenu
             // 
-            this.tabControlMainMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlMainMenu.Controls.Add(this.Menu);
             this.tabControlMainMenu.Controls.Add(this.ShoppingCart);
             this.tabControlMainMenu.Location = new System.Drawing.Point(-1, 26);
@@ -103,7 +102,7 @@ namespace ProjectResraurantWinForm
             // textBoxTimeCookingEdit
             // 
             this.textBoxTimeCookingEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTimeCookingEdit.Location = new System.Drawing.Point(476, 264);
+            this.textBoxTimeCookingEdit.Location = new System.Drawing.Point(459, 264);
             this.textBoxTimeCookingEdit.Multiline = true;
             this.textBoxTimeCookingEdit.Name = "textBoxTimeCookingEdit";
             this.textBoxTimeCookingEdit.ReadOnly = true;
@@ -136,6 +135,7 @@ namespace ProjectResraurantWinForm
             // 
             this.dataGridViewShopingCart.AllowUserToAddRows = false;
             this.dataGridViewShopingCart.AllowUserToDeleteRows = false;
+            this.dataGridViewShopingCart.AllowUserToResizeRows = false;
             this.dataGridViewShopingCart.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewShopingCart.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridViewShopingCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -172,7 +172,7 @@ namespace ProjectResraurantWinForm
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(811, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(945, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -266,17 +266,16 @@ namespace ProjectResraurantWinForm
             // 
             // pictureBoxDish
             // 
-            this.pictureBoxDish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxDish.Location = new System.Drawing.Point(453, 116);
+            this.pictureBoxDish.Location = new System.Drawing.Point(480, 116);
             this.pictureBoxDish.Name = "pictureBoxDish";
-            this.pictureBoxDish.Size = new System.Drawing.Size(305, 128);
+            this.pictureBoxDish.Size = new System.Drawing.Size(250, 128);
             this.pictureBoxDish.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxDish.TabIndex = 20;
             this.pictureBoxDish.TabStop = false;
+            this.pictureBoxDish.Click += new System.EventHandler(this.pictureBoxDish_Click);
             // 
             // LabelNameFoodEdit
             // 
-            this.LabelNameFoodEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelNameFoodEdit.AutoSize = true;
             this.LabelNameFoodEdit.Location = new System.Drawing.Point(557, 50);
             this.LabelNameFoodEdit.Name = "LabelNameFoodEdit";
@@ -287,7 +286,6 @@ namespace ProjectResraurantWinForm
             // 
             // LabelPriceDishEdit
             // 
-            this.LabelPriceDishEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelPriceDishEdit.AutoSize = true;
             this.LabelPriceDishEdit.Location = new System.Drawing.Point(480, 254);
             this.LabelPriceDishEdit.Name = "LabelPriceDishEdit";
@@ -298,7 +296,6 @@ namespace ProjectResraurantWinForm
             // 
             // textBoxDescriptionEdit
             // 
-            this.textBoxDescriptionEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescriptionEdit.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxDescriptionEdit.Location = new System.Drawing.Point(431, 338);
             this.textBoxDescriptionEdit.Multiline = true;
@@ -392,6 +389,7 @@ namespace ProjectResraurantWinForm
             this.maskedTextBoxPriceDishEdit.TabIndex = 31;
             this.maskedTextBoxPriceDishEdit.ValidatingType = typeof(int);
             this.maskedTextBoxPriceDishEdit.Visible = false;
+            this.maskedTextBoxPriceDishEdit.MouseClick += new System.Windows.Forms.MouseEventHandler(this.maskedTextBox_MouseClick);
             this.maskedTextBoxPriceDishEdit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maskedTextBoxPriceDishEdit_KeyPress);
             // 
             // maskedTextBoxTimeCookEdit
@@ -404,6 +402,7 @@ namespace ProjectResraurantWinForm
             this.maskedTextBoxTimeCookEdit.TabIndex = 32;
             this.maskedTextBoxTimeCookEdit.ValidatingType = typeof(int);
             this.maskedTextBoxTimeCookEdit.Visible = false;
+            this.maskedTextBoxTimeCookEdit.MouseClick += new System.Windows.Forms.MouseEventHandler(this.maskedTextBox_MouseClick);
             this.maskedTextBoxTimeCookEdit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maskedTextBoxTimeCookEdit_KeyPress);
             // 
             // comboBoxTypeDishEdit
@@ -470,12 +469,36 @@ namespace ProjectResraurantWinForm
             this.buttonRemoveDish.Visible = false;
             this.buttonRemoveDish.Click += new System.EventHandler(this.buttonRemoveDish_Click);
             // 
+            // labelFullPrice
+            // 
+            this.labelFullPrice.AutoSize = true;
+            this.labelFullPrice.Font = new System.Drawing.Font("Mistral", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelFullPrice.Location = new System.Drawing.Point(734, 116);
+            this.labelFullPrice.Name = "labelFullPrice";
+            this.labelFullPrice.Size = new System.Drawing.Size(157, 26);
+            this.labelFullPrice.TabIndex = 39;
+            this.labelFullPrice.Text = "Полная стоимость: ";
+            this.labelFullPrice.Visible = false;
+            // 
+            // labelFullTimeCooking
+            // 
+            this.labelFullTimeCooking.AutoSize = true;
+            this.labelFullTimeCooking.Font = new System.Drawing.Font("Mistral", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelFullTimeCooking.Location = new System.Drawing.Point(734, 179);
+            this.labelFullTimeCooking.Name = "labelFullTimeCooking";
+            this.labelFullTimeCooking.Size = new System.Drawing.Size(160, 26);
+            this.labelFullTimeCooking.TabIndex = 40;
+            this.labelFullTimeCooking.Text = "Общее время готовки:";
+            this.labelFullTimeCooking.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.ClientSize = new System.Drawing.Size(811, 495);
+            this.ClientSize = new System.Drawing.Size(945, 500);
+            this.Controls.Add(this.labelFullTimeCooking);
+            this.Controls.Add(this.labelFullPrice);
             this.Controls.Add(this.buttonRemoveDish);
             this.Controls.Add(this.labelNumberOfDish);
             this.Controls.Add(this.textBoxNumberOfDish);
@@ -557,6 +580,8 @@ namespace ProjectResraurantWinForm
         private System.Windows.Forms.Label labelNumberOfDish;
         private System.Windows.Forms.Button buttonRemoveDish;
         public System.Windows.Forms.DataGridView dataGridViewShopingCart;
+        public System.Windows.Forms.Label labelFullPrice;
+        public System.Windows.Forms.Label labelFullTimeCooking;
     }
 }
 

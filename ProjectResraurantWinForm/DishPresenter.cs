@@ -18,24 +18,30 @@ namespace ProjectResraurantWinForm
             DishModel.InitializeDishMenu();
             DishModel.InitializeTypesMenu();
             tabControlTypesMenu.TabPages.Clear();
-            DishModel.listTypePage.Clear();
+            Form1.listTypePage.Clear();
             TabPage myTabPage = new TabPage("Всё");
             tabControlTypesMenu.TabPages.Add(myTabPage);
             tabControlTypesMenu.TabPages[0].UseVisualStyleBackColor = true;
-            // DishModel.listTypePage.Add(new ListBox());
-            DishModel.listTypePage.Add(new DataGridView());
-            DishModel.listTypePage[0].Dock = DockStyle.Fill;
-            DishModel.listTypePage[0].Name = "dataGridView" + (0);
-            tabControlTypesMenu.TabPages[0].Controls.Add(DishModel.listTypePage[0]);
-            DishModel.listTypePage[0].Rows.Clear();
-            form1.dataGridViewShopingCart.ColumnCount = 3;
+            Form1.listTypePage.Add(new DataGridView());
+            Form1.listTypePage[0].Dock = DockStyle.Fill;
+            Form1.listTypePage[0].Name = "dataGridView" + (0);
+            tabControlTypesMenu.TabPages[0].Controls.Add(Form1.listTypePage[0]);
+            Form1.listTypePage[0].Rows.Clear();
+            Form1.listTypePage[0].ColumnCount = 3;
+            Form1.listTypePage[0].AllowUserToAddRows = false;
+            Form1.listTypePage[0].RowHeadersVisible = false;
+            Form1.listTypePage[0].SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            Form1.listTypePage[0].AllowUserToResizeRows = false;
+            Form1.listTypePage[0].ReadOnly = true;
             foreach (var dish in DishModel.dishes)
             {
-                DishModel.listTypePage[0].Name = "Название";
-                DishModel.listTypePage[0].Columns[1].Width = 304;
-                DishModel.listTypePage[0].Columns[1].Name = "Цена";
-                DishModel.listTypePage[0].Columns[2].Name = "ID";
-                DishModel.listTypePage[0].Columns[2].Visible = false;
+                Form1.listTypePage[0].Columns[1].Name = "Название";
+                Form1.listTypePage[0].Columns[1].Width = 333;
+                Form1.listTypePage[0].Columns[2].Width = 40;
+                Form1.listTypePage[0].Columns[2].Name = "Цена";
+                Form1.listTypePage[0].Columns[0].Name = "ID";
+                Form1.listTypePage[0].Columns[0].Visible = false;
+                Form1.listTypePage[0].Rows.Add(dish.Id, dish.DishName, dish.PriceOfDIsh);
             }
                
             for (int i = 0; i < DishModel.AllTypeDishes.Count; i++)
@@ -46,127 +52,128 @@ namespace ProjectResraurantWinForm
                 var searchedFoodMenu = from query in DishModel.dishes
                                        where query.TypeOfDish.Contains(DishModel.AllTypeDishes[i])
                                        select query;
-                DishModel.listTypePage.Add(new DataGridView());
-                DishModel.listTypePage[i + 1].Name = "TypeListBox" + (i + 1);
-                DishModel.listTypePage[i + 1].Dock = DockStyle.Fill;
-                tabControlTypesMenu.TabPages[i + 1].Controls.Add(DishModel.listTypePage[i + 1]);
-                DishModel.listTypePage[i + 1].Rows.Clear();
+                Form1.listTypePage.Add(new DataGridView());
+                Form1.listTypePage[i + 1].Name = "TypeListBox" + (i + 1);
+                Form1.listTypePage[i + 1].Dock = DockStyle.Fill;
+                tabControlTypesMenu.TabPages[i + 1].Controls.Add(Form1.listTypePage[i + 1]);
+                Form1.listTypePage[i + 1].Rows.Clear();
+                Form1.listTypePage[i + 1].ColumnCount = 3;
+                Form1.listTypePage[i + 1].AllowUserToAddRows = false;
+                Form1.listTypePage[i + 1].RowHeadersVisible = false;
+                Form1.listTypePage[i + 1].SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                Form1.listTypePage[i + 1].AllowUserToResizeRows = false;
+                Form1.listTypePage[i + 1].ReadOnly = true;
                 foreach (var dish in searchedFoodMenu)
                 {
-                    DishModel.listTypePage[i + 1].Name = "Название";
-                    DishModel.listTypePage[i + 1].Columns[1].Width = 304;
-                    DishModel.listTypePage[i + 1].Columns[1].Name = "Цена";
-                    DishModel.listTypePage[i + 1].Columns[2].Name = "ID";
-                    DishModel.listTypePage[i + 1].Columns[2].Visible = false;
+                    Form1.listTypePage[i + 1].Columns[1].Name = "Название";
+                    Form1.listTypePage[i + 1].Columns[1].Width = 333;
+                    Form1.listTypePage[i + 1].Columns[2].Width = 40;
+                    Form1.listTypePage[i + 1].Columns[2].Name = "Цена";
+                    Form1.listTypePage[i + 1].Columns[0].Name = "ID";
+                    Form1.listTypePage[i + 1].Columns[0].Visible = false;
+                    Form1.listTypePage[i + 1].Rows.Add(dish.Id, dish.DishName, dish.PriceOfDIsh);
                 }
             }
-                
-            
         }
         public static void InitializeCart(ListBox ShoppingCartListBox)
         {
             form1.dataGridViewShopingCart.ColumnCount = 4;
             ShoppingCartListBox.Items.Clear();
             form1.dataGridViewShopingCart.Rows.Clear();
-            form1.dataGridViewShopingCart.Columns[0].Name = "Название";
-            form1.dataGridViewShopingCart.Columns[0].Width = 304;
-            form1.dataGridViewShopingCart.Columns[1].Name = "Цена";
-            form1.dataGridViewShopingCart.Columns[1].Width = 45;
-            form1.dataGridViewShopingCart.Columns[2].Name = "Кол-во";
-            form1.dataGridViewShopingCart.Columns[2].Width = 35;
-            form1.dataGridViewShopingCart.Columns[3].Name = "ID";
-            form1.dataGridViewShopingCart.Columns[3].Visible = false;
+            form1.dataGridViewShopingCart.Columns[1].Name = "Название";
+            form1.dataGridViewShopingCart.Columns[1].Width = 304;
+            form1.dataGridViewShopingCart.Columns[2].Name = "Цена";
+            form1.dataGridViewShopingCart.Columns[2].Width = 45;
+            form1.dataGridViewShopingCart.Columns[3].Name = "Кол-во";
+            form1.dataGridViewShopingCart.Columns[3].Width = 35;
+            form1.dataGridViewShopingCart.Columns[0].Name = "ID";
+            form1.dataGridViewShopingCart.Columns[0].Visible = false;
             foreach (var dishId in DishModel.Cart)
             {
                 bool check = true;
                 for (int i = 0; i < form1.dataGridViewShopingCart.Rows.Count; i++)
                 {
-                    int findedId = int.Parse(form1.dataGridViewShopingCart[3, i].Value.ToString());
+                    int findedId = int.Parse(form1.dataGridViewShopingCart[0, i].Value.ToString());
                     if (findedId == dishId)
                         check = false;
                 }
-                //ShoppingCartListBox.DataSource = DishModel.Cart;
                 int indexDish = DishModel.dishes.FindIndex(x => x.Id.Equals(dishId));
-                
                 if (check)
                 {
-                    //ShoppingCartListBox.Items.Add(DishModel.dishes[indexDish]);
-                    //ShoppingCartListBox.DisplayMember = "DishName";
-                    //ShoppingCartListBox.ValueMember = "Id";
-                    form1.dataGridViewShopingCart.Rows.Add(DishModel.dishes[indexDish].DishName, DishModel.dishes[indexDish].PriceOfDIsh, NumberOfDish(dishId), DishModel.dishes[indexDish].Id);
+                    form1.dataGridViewShopingCart.Rows.Add(DishModel.dishes[indexDish].Id, DishModel.dishes[indexDish].DishName, DishModel.dishes[indexDish].PriceOfDIsh, NumberOfDish(dishId));
                 }
-
             }
-            //form1.dataGridViewShopingCart.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
-
         }
-
         public static void UpdateInformation(int id)
         {
-            
-            int indexDish = DishModel.dishes.FindIndex(x => x.Id.Equals(id));
-            string nameDish = DishModel.dishes[indexDish].DishName;
-            form1.TextBoxNameDishEdit.Text = nameDish;
-            form1.labelNameDishUser.Text = nameDish;
-            string addressPicture = DishModel.dishes[indexDish].PictureDish;
-            try
+            if (Application.OpenForms.OfType<Form1>().Any())
             {
-                form1.pictureBoxDish.Image = Image.FromFile(addressPicture);
-            }
-            catch
-            {
-                form1.pictureBoxDish.Image = form1.pictureBoxDish.ErrorImage;
-            }
-            form1.maskedTextBoxTimeCookEdit.Text = DishModel.dishes[indexDish].CookingTime.ToString();
-            //form1.labelTimeCookingEdit.Show()
-            form1.comboBoxTypeDishEdit.DataSource = null;
-            form1.comboBoxTypeDishEdit.DataSource = DishModel.AllTypeDishes;
-            form1.comboBoxTypeDishEdit.SelectedItem = DishModel.dishes[indexDish].TypeOfDish;
-            form1.maskedTextBoxPriceDishEdit.Text = DishModel.dishes[indexDish].PriceOfDIsh.ToString();
-            form1.textBoxDescriptionEdit.Text = DishModel.dishes[indexDish].DescriptionDish;
-            form1.labelPriceDishUser.Text = "Цена: " + DishModel.dishes[indexDish].PriceOfDIsh.ToString() + " Руб.";
-            form1.labelTimeCookUser.Text = "Время готовки: " + DishModel.dishes[indexDish].CookingTime.ToString() + " мин.";
-            form1.labelTypeDishUser.Text = "Тип блюда: " + DishModel.dishes[indexDish].TypeOfDish.ToString();
-            form1.textBoxDescriptionUser.Text = DishModel.dishes[indexDish].DescriptionDish;
-            form1.textBoxDescriptionEdit.Text = DishModel.dishes[indexDish].DescriptionDish;
-            form1.textBoxNumberOfDish.Text = NumberOfDish(id).ToString();
-            //form1.textBoxNumberOfDish.Text;
-            //form1.
-            switch (premission)
-            {
-                case 0:
-                    form1.ShowBoxUserShop();
-                    break;
-                case 1:
-                    form1.ShowBoxUserCart();
-                    break;
-                case 2:
-                    form1.ShowBoxAdminShop();
-                    break;
-                case 3:
-                    form1.ShowBoxUserCart();
-                    break;
-            }
+                int indexDish = DishModel.dishes.FindIndex(x => x.Id.Equals(id));
+                string nameDish = DishModel.dishes[indexDish].DishName;
+                form1.TextBoxNameDishEdit.Text = nameDish;
+                form1.labelNameDishUser.Text = nameDish;
+                string addressPicture = DishModel.dishes[indexDish].PictureDish;
+                try
+                {
+                    form1.pictureBoxDish.Image = Image.FromFile(addressPicture);
+                }
+                catch
+                {
+                    form1.pictureBoxDish.Image = form1.pictureBoxDish.ErrorImage;
+                }
+                form1.maskedTextBoxTimeCookEdit.Text = DishModel.dishes[indexDish].CookingTime.ToString();
+                form1.comboBoxTypeDishEdit.DataSource = null;
+                form1.comboBoxTypeDishEdit.DataSource = DishModel.AllTypeDishes;
+                form1.comboBoxTypeDishEdit.SelectedItem = DishModel.dishes[indexDish].TypeOfDish;
+                form1.maskedTextBoxPriceDishEdit.Text = DishModel.dishes[indexDish].PriceOfDIsh.ToString();
+                form1.textBoxDescriptionEdit.Text = DishModel.dishes[indexDish].DescriptionDish;
+                form1.labelPriceDishUser.Text = "Цена: " + DishModel.dishes[indexDish].PriceOfDIsh.ToString() + " Руб.";
+                form1.labelTimeCookUser.Text = "Время готовки: " + DishModel.dishes[indexDish].CookingTime.ToString() + " мин.";
+                form1.labelTypeDishUser.Text = "Тип блюда: " + DishModel.dishes[indexDish].TypeOfDish.ToString();
+                form1.textBoxDescriptionUser.Text = DishModel.dishes[indexDish].DescriptionDish;
+                form1.textBoxDescriptionEdit.Text = DishModel.dishes[indexDish].DescriptionDish;
+                form1.textBoxNumberOfDish.Text = NumberOfDish(id).ToString();
+                int fullPrice = 0;
+                int fullTmeCooking = 0;
+                foreach(var tempId in DishModel.Cart)
+                {
+                    int tempIndexDish = DishModel.dishes.FindIndex(x => x.Id.Equals(tempId));
+                    fullPrice += DishModel.dishes[tempIndexDish].PriceOfDIsh;
+                    fullTmeCooking += DishModel.dishes[tempIndexDish].CookingTime;
+                }
+                form1.labelFullPrice.Text = "Полная стоимость: " + fullPrice + " руб";
+                form1.labelFullTimeCooking.Text = "Общее время: " + fullTmeCooking + " мин";
+                switch (premission)
+                {
+                    case 0:
+                        form1.ShowBoxUserShop();
+                        break;
+                    case 1:
+                        form1.ShowBoxUserCart();
+                        break;
+                    case 2:
+                        form1.ShowBoxAdminShop();
+                        break;
+                    case 3:
+                        form1.ShowBoxUserCart();
+                        break;
+                }
+            } 
         }
-
         public static List<Dish> GetDishes()
         {
             return DishModel.dishes;
         }
-
         public static List<DataGridView> GetListType()
         {
-            return DishModel.listTypePage;
+            return Form1.listTypePage;
         }
         public static List<string> GetAllType()
         {
-            return DishModel.AllTypeDishes;
+            return ProjectResraurantWinForm.DishModel.AllTypeDishes;
         }
-
         public static void Autharization(TextBox login, TextBox password)
         {
-
             Form1 form1 = (Form1)Application.OpenForms["Form1"];
             Form2 form2 = (Form2)Application.OpenForms["Form2"];
             if (login.Text == "admin" && password.Text == "admin")
@@ -179,10 +186,8 @@ namespace ProjectResraurantWinForm
                 MessageBox.Show("Неверный логин или пароль!", "Error");
                 login.Text = "";
                 password.Text = "";
-            }
-            
+            }  
         }
-
         public static void AddType(string type)
         {
             if(DishModel.AddType(type))
@@ -209,11 +214,12 @@ namespace ProjectResraurantWinForm
                     File.Copy(directory, @$"Pictures\{newDish.Id}.jpg", true);
                 MessageBox.Show("Новое блюдо добавлено", "Успех");
                 form1.Initialization();
+                FormAddDish formAddDish = (FormAddDish)Application.OpenForms["FormAddDish"];
+                formAddDish.Close();
             }
             else
                 MessageBox.Show("Такое блюдо уже есть", "Error");
         }
-
         public static void EditDishName(int id, string newNameDish)
         {
             switch (DishModel.EditDishName(id, newNameDish))
@@ -236,9 +242,7 @@ namespace ProjectResraurantWinForm
                     MessageBox.Show("Слишком длинное название блюда!", "Error");
                     form1.Initialization();
                     break;
-
-            }
-            
+            }     
         }
         public static void EditPriceDish(int id, int newPrice)
         {
@@ -246,12 +250,11 @@ namespace ProjectResraurantWinForm
             MessageBox.Show("Новая цена установлена", "Успех");
             form1.Initialization();
         }
-        public static void EditTimeCooking(int id, int newPrice)
+        public static void EditTimeCooking(int id, int timeCooking)
         {
-            DishModel.EditTimeCooking(id, newPrice);
+            DishModel.EditTimeCooking(id, timeCooking);
             MessageBox.Show("Новое время готовки установлено", "Успех");
             form1.Initialization();
-
         }
         public static void EditDescriptionDish(int id, string newDescription)
         {
@@ -265,6 +268,25 @@ namespace ProjectResraurantWinForm
             string newType = DishModel.AllTypeDishes[indexType];
             DishModel.EditTypeDish(id, newType);
             form1.Initialization();
+        }
+        public static void EditPictureDish(int id)
+        {
+            OpenFileDialog OPF = new();
+            OPF.Filter = "Файлы jpg|*.jpg";
+            if (OPF.ShowDialog() == DialogResult.OK)
+            {
+                string directoryPicture = OPF.FileName;
+                try
+                {
+                    File.Copy(directoryPicture, @$"Pictures\{id}.jpg", true);
+                    DishModel.EditPictureDish(id, @$"Pictures\{id}.jpg");
+                    form1.Initialization();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }
         }
         public static void RemoveType(string removedType)
         {
@@ -281,7 +303,6 @@ namespace ProjectResraurantWinForm
             {
                 MessageBox.Show("Удалить тип нельзя, есть блюда с выбранным типом. Необходимо сменить тип или удалить блюда", "Error");
             }
-
         }
         public static void RemoveDish(int id)
         {
@@ -309,7 +330,7 @@ namespace ProjectResraurantWinForm
             InitializeCart(ShoppingCartListBox);
             UpdateInformation(id);
             if (!DishModel.Cart.Contains(id))
-                form1.HideAll();
+                form1.HideAll();     
         }
         public static void GoToCart()
         {
@@ -321,13 +342,10 @@ namespace ProjectResraurantWinForm
         }
         public static void GoToShop(int index)
         {
-
             if (premission == 3)
                 premission = 2;
             else
                 premission = 0;
-            //int index = tabControlTypesMenu.SelectedIndex;
-            DishModel.listTypePage[index].ClearSelected(); 
             form1.HideAll();
         }
         public static int NumberOfDish(int enteredId)
@@ -340,8 +358,5 @@ namespace ProjectResraurantWinForm
             }
             return number;
         }
-        //public static void  
-
-
     }
 }

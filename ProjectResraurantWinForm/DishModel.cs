@@ -12,12 +12,9 @@ namespace ProjectResraurantWinForm
 {
     class DishModel
     {
-
         public static List<Dish> dishes = new List<Dish>();
         public static List<string> AllTypeDishes = new List<string>();
-        //public static List<ListBox> listTypePage = new List<ListBox>();
-        public static List<int> Cart = new();
-        public static List<DataGridView> listTypePage = new();
+        public static List<int> Cart = new();  
         static SqlConnection sqlConnection = new SqlConnection("Server=KMR-HD-46419\\SQLEXPRESS;Database=MyDatabase;Trusted_Connection=True;MultipleActiveResultSets=True;");
         public static void InitializeTypesMenu()
         {
@@ -54,7 +51,6 @@ namespace ProjectResraurantWinForm
             {
                 sqlConnection.Close();
             }
-
         }
         public static void InitializeDishMenu()
         {
@@ -110,29 +106,7 @@ namespace ProjectResraurantWinForm
             {
                 sqlConnection.Close();
             }
-
         }
-        static public void SaveInTxtFoodMenu()
-        {
-            string nameTxtFoodMenu = "DishMenu.txt";
-            using (StreamWriter sw = new StreamWriter(nameTxtFoodMenu, false)) // открываем файл
-            {
-                foreach (var temp in dishes)
-                {
-                    sw.Write(temp.Id + "|" + temp.DishName + "|" + temp.TypeOfDish + "|" + temp.PriceOfDIsh + "|" + temp.CookingTime + "|" + temp.DescriptionDish + "|" + temp.PictureDish);
-                    sw.WriteLine();
-                }
-            }
-        } // сохранение меню в файл DishMenu.txt
-        static public void SaveInTxtTypesFood()
-        {
-            string nameTxtTypesFood = "AllTypeDishes.txt";
-            using (StreamWriter sw = new StreamWriter(nameTxtTypesFood, false)) // открываем файл
-            {
-                foreach (var temp in AllTypeDishes)
-                    sw.WriteLine(temp);
-            }
-        } //сохранеие типов блюд в файл TypesFood.txt 
         static public void SaveInDataBaseFoodMenu()
         {
             string sql = "DELETE  FROM DishMenu";
@@ -160,7 +134,6 @@ namespace ProjectResraurantWinForm
             {
                 sqlConnection.Close();
             }
-
         }
         static public void SaveInDataBaseTypesMenu()
         {
@@ -189,7 +162,6 @@ namespace ProjectResraurantWinForm
             {
                 sqlConnection.Close();
             }
-
         }
         public static bool AddType(string type)
         {
@@ -206,7 +178,6 @@ namespace ProjectResraurantWinForm
         }
         public static bool AddDish(Dish newDish)
         {
-
             if(!dishes.Exists(x => x.DishName.ToLower().Equals(newDish.DishName.ToLower())))
             {
                 dishes.Add(newDish);
@@ -229,7 +200,7 @@ namespace ProjectResraurantWinForm
             dishes.RemoveAt(indexDish);
             SaveInDataBaseFoodMenu();
         }
-        public static int EditDishName(int idDishName, string newDishName) // Поставить ограничение на 80 символов
+        public static int EditDishName(int idDishName, string newDishName) 
         {
             bool check = dishes.Exists(x => x.DishName.ToLower().Equals(newDishName));
             if (check)
@@ -269,17 +240,19 @@ namespace ProjectResraurantWinForm
             dishes[indexDish].TypeOfDish = newType;
             SaveInDataBaseFoodMenu();
         }
+        public static void EditPictureDish(int id, string newPictureDish)
+        {
+            int indexDish = dishes.FindIndex(x => x.Id.Equals(id));
+            dishes[indexDish].PictureDish = newPictureDish;
+            SaveInDataBaseFoodMenu();
+        }
         public static void AddToCart(int id)
         {
-           
             Cart.Add(id);
-            //DishModel.listTypePage[0].ClearSelected();
         }
         public static void RemoveFromCart(int id)
-        {
-            
+        { 
             Cart.Remove(id);
-            
         }
     }
 }

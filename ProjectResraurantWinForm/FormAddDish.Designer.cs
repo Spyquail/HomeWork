@@ -133,6 +133,7 @@ namespace ProjectResraurantWinForm
             this.maskedTextBoxPrice.Size = new System.Drawing.Size(100, 23);
             this.maskedTextBoxPrice.TabIndex = 11;
             this.maskedTextBoxPrice.ValidatingType = typeof(int);
+            this.maskedTextBoxPrice.MouseClick += new System.Windows.Forms.MouseEventHandler(this.maskedTextBox_MouseClick);
             // 
             // maskedTextBoxTimeCooking
             // 
@@ -143,6 +144,7 @@ namespace ProjectResraurantWinForm
             this.maskedTextBoxTimeCooking.Size = new System.Drawing.Size(100, 23);
             this.maskedTextBoxTimeCooking.TabIndex = 12;
             this.maskedTextBoxTimeCooking.ValidatingType = typeof(int);
+            this.maskedTextBoxTimeCooking.MouseClick += new System.Windows.Forms.MouseEventHandler(this.maskedTextBox_MouseClick);
             // 
             // buttonSelectPicture
             // 
