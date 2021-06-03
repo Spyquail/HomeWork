@@ -141,6 +141,8 @@ namespace ProjectResraurantWinForm
             {
                 int enteredId = int.Parse(enteredDataGridView[0, indexRow].Value.ToString());
                 DishPresenter.UpdateInformation(enteredId);
+                int indexDish = DishPresenter.GetDishes().FindIndex(x => x.Id.Equals(enteredId));
+                selectedDish = DishPresenter.GetDishes()[indexDish];
             }
         }
         private void AddFoodInCartbutton_Click(object sender, EventArgs e)
