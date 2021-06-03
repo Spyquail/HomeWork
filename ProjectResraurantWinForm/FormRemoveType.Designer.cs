@@ -64,7 +64,7 @@ namespace ProjectResraurantWinForm
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "FormRemoveType";
-            this.Text = "FormRemoveType";
+            this.Text = "Удалить тип";
             this.ResumeLayout(false);
 
         }

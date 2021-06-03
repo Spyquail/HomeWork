@@ -71,7 +71,7 @@ namespace ProjectResraurantWinForm
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FormAddType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormAddType";
+            this.Text = "Добавить тип";
             this.ResumeLayout(false);
             this.PerformLayout();
 
