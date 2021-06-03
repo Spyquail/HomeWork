@@ -279,5 +279,9 @@ namespace ProjectResraurantWinForm
             if (e.KeyChar == 13 && enteredTextBox.Focused == true) //Enter
                 DishPresenter.EditTimeCooking(selectedDish.Id, int.Parse(maskedTextBoxTimeCookEdit.Text));
         }
+        private void buttonMakeAnOrder_Click(object sender, EventArgs e)
+        {
+            DishPresenter.MakeAnOrder();
+        }
     }
 }

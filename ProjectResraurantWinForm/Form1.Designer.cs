@@ -67,6 +67,7 @@ namespace ProjectResraurantWinForm
             this.buttonRemoveDish = new System.Windows.Forms.Button();
             this.labelFullPrice = new System.Windows.Forms.Label();
             this.labelFullTimeCooking = new System.Windows.Forms.Label();
+            this.buttonMakeAnOrder = new System.Windows.Forms.Button();
             this.tabControlMainMenu.SuspendLayout();
             this.Menu.SuspendLayout();
             this.ShoppingCart.SuspendLayout();
@@ -153,7 +154,7 @@ namespace ProjectResraurantWinForm
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.menuStrip1.BackColor = System.Drawing.Color.Gainsboro;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
@@ -347,10 +348,13 @@ namespace ProjectResraurantWinForm
             // 
             // textBoxDescriptionUser
             // 
+            this.textBoxDescriptionUser.BackColor = System.Drawing.Color.AntiqueWhite;
+            this.textBoxDescriptionUser.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
             this.textBoxDescriptionUser.Location = new System.Drawing.Point(431, 338);
             this.textBoxDescriptionUser.Multiline = true;
             this.textBoxDescriptionUser.Name = "textBoxDescriptionUser";
             this.textBoxDescriptionUser.ReadOnly = true;
+            this.textBoxDescriptionUser.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxDescriptionUser.Size = new System.Drawing.Size(365, 123);
             this.textBoxDescriptionUser.TabIndex = 29;
             this.textBoxDescriptionUser.Visible = false;
@@ -460,7 +464,7 @@ namespace ProjectResraurantWinForm
             // 
             this.labelFullPrice.AutoSize = true;
             this.labelFullPrice.Font = new System.Drawing.Font("Mistral", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelFullPrice.Location = new System.Drawing.Point(297, 499);
+            this.labelFullPrice.Location = new System.Drawing.Point(271, 498);
             this.labelFullPrice.Name = "labelFullPrice";
             this.labelFullPrice.Size = new System.Drawing.Size(157, 26);
             this.labelFullPrice.TabIndex = 39;
@@ -476,12 +480,23 @@ namespace ProjectResraurantWinForm
             this.labelFullTimeCooking.TabIndex = 40;
             this.labelFullTimeCooking.Text = "Общее время готовки:";
             // 
+            // buttonMakeAnOrder
+            // 
+            this.buttonMakeAnOrder.Location = new System.Drawing.Point(538, 501);
+            this.buttonMakeAnOrder.Name = "buttonMakeAnOrder";
+            this.buttonMakeAnOrder.Size = new System.Drawing.Size(146, 23);
+            this.buttonMakeAnOrder.TabIndex = 41;
+            this.buttonMakeAnOrder.Text = "Сделать заказ";
+            this.buttonMakeAnOrder.UseVisualStyleBackColor = true;
+            this.buttonMakeAnOrder.Click += new System.EventHandler(this.buttonMakeAnOrder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.BackColor = System.Drawing.Color.AntiqueWhite;
             this.ClientSize = new System.Drawing.Size(806, 523);
+            this.Controls.Add(this.buttonMakeAnOrder);
             this.Controls.Add(this.labelFullTimeCooking);
             this.Controls.Add(this.labelFullPrice);
             this.Controls.Add(this.buttonRemoveDish);
@@ -566,6 +581,7 @@ namespace ProjectResraurantWinForm
         public System.Windows.Forms.DataGridView dataGridViewShopingCart;
         public System.Windows.Forms.Label labelFullPrice;
         public System.Windows.Forms.Label labelFullTimeCooking;
+        private System.Windows.Forms.Button buttonMakeAnOrder;
     }
 }
 

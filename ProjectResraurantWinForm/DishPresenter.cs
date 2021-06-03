@@ -11,6 +11,8 @@ namespace ProjectResraurantWinForm
 {
     class DishPresenter
     {
+        static int fullPrice = 0;
+        static int fullTmeCooking = 0;
         static Form1 form1 = (Form1)Application.OpenForms["Form1"];
         public static int premission = 0; // 0 - usershop 1 - userCart 2 - Adminshop 3 - adminCart
         public static void Initialize(TabControl tabControlTypesMenu)
@@ -138,9 +140,9 @@ namespace ProjectResraurantWinForm
                 form1.textBoxDescriptionUser.Text = DishModel.dishes[indexDish].DescriptionDish;
                 form1.textBoxDescriptionEdit.Text = DishModel.dishes[indexDish].DescriptionDish;
                 form1.textBoxNumberOfDish.Text = NumberOfDish(id).ToString();
-                int fullPrice = 0;
-                int fullTmeCooking = 0;
-                foreach(var tempId in DishModel.Cart)
+                fullPrice = 0;
+                fullTmeCooking = 0;
+                foreach (var tempId in DishModel.Cart)
                 {
                     int tempIndexDish = DishModel.dishes.FindIndex(x => x.Id.Equals(tempId));
                     fullPrice += DishModel.dishes[tempIndexDish].PriceOfDIsh;
@@ -224,6 +226,12 @@ namespace ProjectResraurantWinForm
             }
             else
                 MessageBox.Show("Такое блюдо уже есть", "Error");
+        }
+        public static void AddInCart(int id)
+        {
+            DishModel.AddToCart(id);
+            InitializeCart();
+            UpdateInformation(id);
         }
         public static void EditDishName(int id, string newNameDish)
         {
@@ -323,12 +331,6 @@ namespace ProjectResraurantWinForm
                 form1.HideAll();
             }
         }
-        public static void AddInCart(int id)
-        {
-            DishModel.AddToCart(id);
-            InitializeCart();
-            UpdateInformation(id);
-        }
         public static void RemoveFromCart(int id)
         {
             DishModel.RemoveFromCart(id);
@@ -362,6 +364,19 @@ namespace ProjectResraurantWinForm
                     number++;
             }
             return number;
+        }
+        public static void MakeAnOrder()
+        {
+            if (DishModel.Cart.Count != 0)
+            {
+                MessageBox.Show($"Заказ сделан!\nВремя готовки: {fullTmeCooking} мин\nК оплате: {fullPrice} руб", "Успех");
+                DishModel.Cart.Clear();
+                form1.Initialization();
+                form1.labelFullPrice.Text = "Полная стоимость: " + 0 + " руб";
+                form1.labelFullTimeCooking.Text = "Общее время: " + 0 + " мин";
+            }
+            else
+                MessageBox.Show("Корзина пуста :(");
         }
     }
 }
