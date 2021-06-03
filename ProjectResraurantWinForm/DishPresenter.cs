@@ -41,7 +41,7 @@ namespace ProjectResraurantWinForm
             foreach (var dish in DishModel.dishes)
             {
                 Form1.listTypePage[0].Columns[1].Name = "Название";
-                Form1.listTypePage[0].Columns[1].Width = 333;
+                Form1.listTypePage[0].Columns[1].Width = 316;
                 Form1.listTypePage[0].Columns[2].Width = 40;
                 Form1.listTypePage[0].Columns[2].Name = "Цена";
                 Form1.listTypePage[0].Columns[0].Name = "ID";
@@ -85,7 +85,6 @@ namespace ProjectResraurantWinForm
         public static void InitializeCart()
         {
             form1.dataGridViewShopingCart.ColumnCount = 4;
-
             form1.dataGridViewShopingCart.Rows.Clear();
             form1.dataGridViewShopingCart.Columns[1].Name = "Название";
             form1.dataGridViewShopingCart.Columns[1].Width = 304;
@@ -372,6 +371,7 @@ namespace ProjectResraurantWinForm
                 MessageBox.Show($"Заказ сделан!\nВремя готовки: {fullTmeCooking} мин\nК оплате: {fullPrice} руб", "Успех");
                 DishModel.Cart.Clear();
                 form1.Initialization();
+                InitializeCart();
                 form1.labelFullPrice.Text = "Полная стоимость: " + 0 + " руб";
                 form1.labelFullTimeCooking.Text = "Общее время: " + 0 + " мин";
             }
