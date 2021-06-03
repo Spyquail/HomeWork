@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProjectResraurantWinForm
@@ -81,8 +75,13 @@ namespace ProjectResraurantWinForm
         {
             DishPresenter.Initialize(tabControlTypesMenu);
             foreach (var temp in DishPresenter.GetListType())
-                temp.SelectionChanged += DishListBox_IndexClick;
+            {
+                temp.SelectionChanged += DataGridView_IndexClick;
+                temp.CellClick += DataGridView_CellClick;
+            }
+
             tabControlTypesMenu.SelectedIndexChanged += tabControlTypesMenu_SelectedIndexChanged;
+
         }
         public void AuthorizationSuccessful()
         {
@@ -122,7 +121,7 @@ namespace ProjectResraurantWinForm
             }
             HideAll();
         }
-        public void DishListBox_IndexClick(object sender, EventArgs e)
+        public void DataGridView_IndexClick(object sender, EventArgs e)
         {
             var enteredDataGridView = (DataGridView)sender;
             if(enteredDataGridView != null && enteredDataGridView.Focused == true)
@@ -133,6 +132,16 @@ namespace ProjectResraurantWinForm
                 int indexDish = DishPresenter.GetDishes().FindIndex(x => x.Id.Equals(enteredId));
                 selectedDish = DishPresenter.GetDishes()[indexDish];
             }  
+        }
+        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var enteredDataGridView = (DataGridView)sender;
+            int indexRow = int.Parse(enteredDataGridView.CurrentRow.Index.ToString());
+            if (e.RowIndex == indexRow)
+            {
+                int enteredId = int.Parse(enteredDataGridView[0, indexRow].Value.ToString());
+                DishPresenter.UpdateInformation(enteredId);
+            }
         }
         private void AddFoodInCartbutton_Click(object sender, EventArgs e)
         {
@@ -225,7 +234,7 @@ namespace ProjectResraurantWinForm
         }
         private void ShoppingCartListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DishListBox_IndexClick(sender, e);
+            DataGridView_IndexClick(sender, e);
         }
         private void TextBoxNameDishEdit_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -262,7 +271,7 @@ namespace ProjectResraurantWinForm
         }
         private void dataGridViewShopingCart_SelectionChanged(object sender, EventArgs e)
         {
-            DishListBox_IndexClick(sender, e);
+            DataGridView_IndexClick(sender, e);
         }
         private void pictureBoxDish_Click(object sender, EventArgs e)
         {
