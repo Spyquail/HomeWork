@@ -18,6 +18,7 @@ namespace ProjectResraurantWinForm
             DishModel.InitializeDishMenu();
             DishModel.InitializeTypesMenu();
             tabControlTypesMenu.TabPages.Clear();
+
             Form1.listTypePage.Clear();
             TabPage myTabPage = new TabPage("Всё");
             tabControlTypesMenu.TabPages.Add(myTabPage);
@@ -33,6 +34,8 @@ namespace ProjectResraurantWinForm
             Form1.listTypePage[0].SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             Form1.listTypePage[0].AllowUserToResizeRows = false;
             Form1.listTypePage[0].ReadOnly = true;
+            Form1.listTypePage[0].GridColor = SystemColors.ControlLightLight;
+            Form1.listTypePage[0].BackgroundColor = SystemColors.ControlLightLight;
             foreach (var dish in DishModel.dishes)
             {
                 Form1.listTypePage[0].Columns[1].Name = "Название";
@@ -63,6 +66,8 @@ namespace ProjectResraurantWinForm
                 Form1.listTypePage[i + 1].SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 Form1.listTypePage[i + 1].AllowUserToResizeRows = false;
                 Form1.listTypePage[i + 1].ReadOnly = true;
+                Form1.listTypePage[i + 1].GridColor = SystemColors.ControlLightLight;
+                Form1.listTypePage[i + 1].BackgroundColor = SystemColors.ControlLightLight;
                 foreach (var dish in searchedFoodMenu)
                 {
                     Form1.listTypePage[i + 1].Columns[1].Name = "Название";
@@ -75,10 +80,10 @@ namespace ProjectResraurantWinForm
                 }
             }
         }
-        public static void InitializeCart(ListBox ShoppingCartListBox)
+        public static void InitializeCart()
         {
             form1.dataGridViewShopingCart.ColumnCount = 4;
-            ShoppingCartListBox.Items.Clear();
+
             form1.dataGridViewShopingCart.Rows.Clear();
             form1.dataGridViewShopingCart.Columns[1].Name = "Название";
             form1.dataGridViewShopingCart.Columns[1].Width = 304;
@@ -318,16 +323,16 @@ namespace ProjectResraurantWinForm
                 form1.HideAll();
             }
         }
-        public static void AddInCart(int id, ListBox ShoppingCartListBox)
+        public static void AddInCart(int id)
         {
             DishModel.AddToCart(id);
-            InitializeCart(ShoppingCartListBox);
+            InitializeCart();
             UpdateInformation(id);
         }
-        public static void RemoveFromCart(int id, ListBox ShoppingCartListBox)
+        public static void RemoveFromCart(int id)
         {
             DishModel.RemoveFromCart(id);
-            InitializeCart(ShoppingCartListBox);
+            InitializeCart();
             UpdateInformation(id);
             if (!DishModel.Cart.Contains(id))
                 form1.HideAll();     

@@ -82,6 +82,7 @@ namespace ProjectResraurantWinForm
             DishPresenter.Initialize(tabControlTypesMenu);
             foreach (var temp in DishPresenter.GetListType())
                 temp.SelectionChanged += DishListBox_IndexClick;
+            tabControlTypesMenu.SelectedIndexChanged += tabControlTypesMenu_SelectedIndexChanged;
         }
         public void AuthorizationSuccessful()
         {
@@ -135,7 +136,7 @@ namespace ProjectResraurantWinForm
         }
         private void AddFoodInCartbutton_Click(object sender, EventArgs e)
         {
-            DishPresenter.AddInCart(selectedDish.Id, ShoppingCartListBox);
+            DishPresenter.AddInCart(selectedDish.Id);
         }     
         private void tabControlMainMenu_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -148,9 +149,12 @@ namespace ProjectResraurantWinForm
                     break;
                 case 1:
                     DishPresenter.GoToCart();
-                    ShoppingCartListBox.ClearSelected();
                     break;
             }
+        }
+        public void tabControlTypesMenu_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HideAll();
         }
         public void HideAll()
         {
@@ -176,8 +180,6 @@ namespace ProjectResraurantWinForm
             textBoxNumberOfDish.Visible = false;
             labelNumberOfDish.Visible = false;
             buttonRemoveDish.Visible = false;
-            labelFullPrice.Visible = false;
-            labelFullTimeCooking.Visible = false;
             dataGridViewShopingCart.ClearSelection();
             foreach (var list in listTypePage)
                 list.ClearSelection();
@@ -204,8 +206,6 @@ namespace ProjectResraurantWinForm
             buttonAddPlusDish.Visible = true;
             textBoxNumberOfDish.Visible = true;
             labelNumberOfDish.Visible = true;
-            labelFullPrice.Visible = true;
-            labelFullTimeCooking.Visible = true;
         }
         public void ShowBoxAdminShop()
         {
@@ -254,11 +254,11 @@ namespace ProjectResraurantWinForm
         }
         private void buttonAddMinusDish_Click(object sender, EventArgs e)
         {
-            DishPresenter.RemoveFromCart(selectedDish.Id, ShoppingCartListBox);   
+            DishPresenter.RemoveFromCart(selectedDish.Id);   
         }
         private void buttonAddPlusDish_Click(object sender, EventArgs e)
         {
-            DishPresenter.AddInCart(selectedDish.Id, ShoppingCartListBox);
+            DishPresenter.AddInCart(selectedDish.Id);
         }
         private void dataGridViewShopingCart_SelectionChanged(object sender, EventArgs e)
         {

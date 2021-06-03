@@ -35,7 +35,6 @@ namespace ProjectResraurantWinForm
             this.tabControlTypesMenu = new System.Windows.Forms.TabControl();
             this.ShoppingCart = new System.Windows.Forms.TabPage();
             this.dataGridViewShopingCart = new System.Windows.Forms.DataGridView();
-            this.ShoppingCartListBox = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAuthorization = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +122,6 @@ namespace ProjectResraurantWinForm
             // 
             this.ShoppingCart.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ShoppingCart.Controls.Add(this.dataGridViewShopingCart);
-            this.ShoppingCart.Controls.Add(this.ShoppingCartListBox);
             this.ShoppingCart.Location = new System.Drawing.Point(4, 24);
             this.ShoppingCart.Name = "ShoppingCart";
             this.ShoppingCart.Padding = new System.Windows.Forms.Padding(3);
@@ -137,9 +135,11 @@ namespace ProjectResraurantWinForm
             this.dataGridViewShopingCart.AllowUserToDeleteRows = false;
             this.dataGridViewShopingCart.AllowUserToResizeRows = false;
             this.dataGridViewShopingCart.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewShopingCart.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewShopingCart.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridViewShopingCart.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridViewShopingCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewShopingCart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewShopingCart.GridColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridViewShopingCart.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewShopingCart.MultiSelect = false;
             this.dataGridViewShopingCart.Name = "dataGridViewShopingCart";
@@ -151,19 +151,6 @@ namespace ProjectResraurantWinForm
             this.dataGridViewShopingCart.TabIndex = 1;
             this.dataGridViewShopingCart.SelectionChanged += new System.EventHandler(this.dataGridViewShopingCart_SelectionChanged);
             // 
-            // ShoppingCartListBox
-            // 
-            this.ShoppingCartListBox.BackColor = System.Drawing.SystemColors.Window;
-            this.ShoppingCartListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ShoppingCartListBox.FormattingEnabled = true;
-            this.ShoppingCartListBox.ItemHeight = 15;
-            this.ShoppingCartListBox.Location = new System.Drawing.Point(3, 3);
-            this.ShoppingCartListBox.MultiColumn = true;
-            this.ShoppingCartListBox.Name = "ShoppingCartListBox";
-            this.ShoppingCartListBox.Size = new System.Drawing.Size(384, 436);
-            this.ShoppingCartListBox.TabIndex = 0;
-            this.ShoppingCartListBox.SelectedIndexChanged += new System.EventHandler(this.ShoppingCartListBox_SelectedIndexChanged);
-            // 
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlDark;
@@ -172,7 +159,7 @@ namespace ProjectResraurantWinForm
             this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(945, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(806, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -473,30 +460,28 @@ namespace ProjectResraurantWinForm
             // 
             this.labelFullPrice.AutoSize = true;
             this.labelFullPrice.Font = new System.Drawing.Font("Mistral", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelFullPrice.Location = new System.Drawing.Point(734, 116);
+            this.labelFullPrice.Location = new System.Drawing.Point(297, 499);
             this.labelFullPrice.Name = "labelFullPrice";
             this.labelFullPrice.Size = new System.Drawing.Size(157, 26);
             this.labelFullPrice.TabIndex = 39;
             this.labelFullPrice.Text = "Полная стоимость: ";
-            this.labelFullPrice.Visible = false;
             // 
             // labelFullTimeCooking
             // 
             this.labelFullTimeCooking.AutoSize = true;
             this.labelFullTimeCooking.Font = new System.Drawing.Font("Mistral", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelFullTimeCooking.Location = new System.Drawing.Point(734, 179);
+            this.labelFullTimeCooking.Location = new System.Drawing.Point(12, 499);
             this.labelFullTimeCooking.Name = "labelFullTimeCooking";
             this.labelFullTimeCooking.Size = new System.Drawing.Size(160, 26);
             this.labelFullTimeCooking.TabIndex = 40;
             this.labelFullTimeCooking.Text = "Общее время готовки:";
-            this.labelFullTimeCooking.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.ClientSize = new System.Drawing.Size(945, 500);
+            this.ClientSize = new System.Drawing.Size(806, 523);
             this.Controls.Add(this.labelFullTimeCooking);
             this.Controls.Add(this.labelFullPrice);
             this.Controls.Add(this.buttonRemoveDish);
@@ -565,7 +550,6 @@ namespace ProjectResraurantWinForm
         public System.Windows.Forms.TextBox textBoxDescriptionEdit;
         public System.Windows.Forms.TextBox TextBoxNameDishEdit;
         public System.Windows.Forms.Label labelNameDishUser;
-        private System.Windows.Forms.ListBox ShoppingCartListBox;
         public System.Windows.Forms.Label labelPriceDishUser;
         public System.Windows.Forms.Label labelTypeDishUser;
         public System.Windows.Forms.Label labelTimeCookUser;
